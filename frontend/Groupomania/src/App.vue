@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="../public/icone/icon-above-font.png" width="200px" class="app__img">
-    <HelloWorld msg="Groupomania app for employer"/>
+    <login/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import login from './components/login.vue'
 
 export default {
-  name: 'App',
+  name: 'App', 
   components: {
-    HelloWorld
+    login
   }
 }
 </script>
@@ -23,9 +23,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-  &__img {
-    margin-bottom: 10px;
-  }
+  margin-top: 20px;
 }
 </style>
