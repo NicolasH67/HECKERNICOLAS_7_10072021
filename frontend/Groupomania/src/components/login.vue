@@ -19,7 +19,7 @@
     
         <input type="submit" value="Connexion" class="form__btn">
 
-        <br/><br/><a href="#" class="form__login">Créer un compte</a>
+        <br /><br /><router-link to="/signup">Créer un compte</router-link>
       </form>
     
     </div>
