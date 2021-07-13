@@ -5,14 +5,14 @@
     
         <div class="form__group">
     
-          <label for="name">Votre e-mail professionnel</label><br />
+          <label for="name">Votre Nom</label><br />
           <input type="text" name="name" id="name">
     
         </div>
         
         <div class="form__group">
     
-          <label for="lastname">Votre e-mail professionnel</label><br />
+          <label for="lastname">Votre Prénom</label><br />
           <input type="text" name="lastname" id="lastname">
     
         </div>
