@@ -1,4 +1,4 @@
-# groupomania-app
+# groupomania
 
 ## Project setup
 ```
