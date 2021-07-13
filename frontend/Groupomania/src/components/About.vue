@@ -5,6 +5,20 @@
     
         <div class="form__group">
     
+          <label for="name">Votre e-mail professionnel</label><br />
+          <input type="text" name="name" id="name">
+    
+        </div>
+        
+        <div class="form__group">
+    
+          <label for="lastname">Votre e-mail professionnel</label><br />
+          <input type="text" name="lastname" id="lastname">
+    
+        </div>
+        
+        <div class="form__group">
+    
           <label for="mail">Votre e-mail professionnel</label><br />
           <input type="email" name="mail" id="mail">
     
@@ -12,14 +26,21 @@
 
         <div class="form__group">
     
-          <label for="password">Votre mots de passe</label><br />
+          <label for="password">Votre mot de passe</label><br />
           <input type="password" name="password" id="password">
+    
+        </div>
+        
+        <div class="form__group">
+    
+          <label for="confirmpassword">Confirmer votre mot de passe</label><br />
+          <input type="password" name="confirmpassword" id="confirmpassword">
     
         </div>
     
         <input type="submit" value="Connexion" class="form__btn">
 
-        <br /><br /><router-link to="/About">Créer un compte</router-link>
+        <br /><br /><router-link to="/">J'ai déjà un compte</router-link>
       </form>
     
     </div>
