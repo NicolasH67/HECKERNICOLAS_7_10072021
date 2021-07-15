@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="About">
     <img alt="Vue logo" src="../assets/logo.png" width="200px">
     <Signup/>
   </div>
@@ -9,7 +9,7 @@
 import Signup from '@/components/Signup.vue'
 
 export default {
-  name: 'Home',
+  name: 'About',
   components: {
     Signup
   }
