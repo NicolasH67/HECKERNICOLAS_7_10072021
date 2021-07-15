@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="Login">
     <img alt="Vue logo" src="../assets/logo.png" width="200px">
     <Login/>
   </div>
