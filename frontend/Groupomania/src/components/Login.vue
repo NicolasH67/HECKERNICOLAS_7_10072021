@@ -5,8 +5,8 @@
     
         <div class="form__group">
     
-          <label for="mail">Votre e-mail professionnel</label><br />
-          <input type="email" name="mail" id="mail">
+          <label for="username">Votre e-mail prefessionnel</label><br />
+          <input type="text" name="username" id="username">
     
         </div>
 
