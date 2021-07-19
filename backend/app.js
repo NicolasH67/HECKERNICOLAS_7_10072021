@@ -1,8 +1,8 @@
-import express from 'express';
-import helmet from 'helmet';
+const express = require('express')
+const helmet = require('helmet')
 require('dotenv').config;
 
-import userRoutes from './routes/user';
+const userRoutes = require('./routes/user')
 
 const app = express(); 
 
