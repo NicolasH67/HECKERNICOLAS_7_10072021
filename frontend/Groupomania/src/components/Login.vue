@@ -1,7 +1,7 @@
 <template>
     <div>
     
-      <form action="" class="form">
+      <form class="form"  @submit.prevent="submit">
     
         <div class="form__group">
     
@@ -26,7 +26,43 @@
 </template>
 
 <script>
+const axios = require('axios')
 
+export default {
+  name: 'login', 
+  data() {
+    return {
+      email: "",
+      password: "",
+      submitted: false
+    }
+  }, 
+  methods: {
+    submit() {
+      const inputEmail = this.email; 
+      const inputPassword = this.password;
+      this.submitted = true; 
+      axios.post("http://192.168.1.15:3000/api/auth/login", {email : inputEmail, password: inputPassword })
+      .then(function (response) {
+        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("userId", response.data.userId)
+        localStorage.setItem("name", response.data.name)
+        localStorage.setItem("lastName", response.data.lastname)
+        localStorage.setItem("picture", response.data.picture)
+        localStorage.setItem("admin", response.data.admin)
+      })
+      .catch(function(error) {
+        const errorCode = error.message.split("code ")[1]
+        let messageError = ""
+        switch (errorCode){
+          case "401": messageError = "Mot de passe erroné";break
+          case "404": messageError = "User not found";break
+        }
+        console.log(messageError)
+      })
+    }
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

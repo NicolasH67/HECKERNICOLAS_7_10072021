@@ -1,7 +1,7 @@
 <template>
     <div>
     
-      <form action="" class="form">
+      <form class="form" @submit.prevent="submit">
     
         <div class="form__group">
     
@@ -38,7 +38,7 @@
     
         </div>
     
-        <input type="submit" value="Connexion" class="form__btn">
+        <button class="form__btn" id="btn--connect">Connexion</button>
 
         <br /><br /><router-link to="/">J'ai déjà un compte</router-link>
       </form>
@@ -47,7 +47,59 @@
 </template>
 
 <script>
-
+const axios = require('axios');
+export default {
+  name: 'incription',
+  data() {
+    return {
+      name: "", 
+      lastname: "",
+      email: "", 
+      password: "", 
+      submitted: false
+    }
+  }, 
+  methods: {
+    submit() {
+      const Inputname = this.name;
+      const InputlastName = this.lastname;
+      const Inputemail = this.email;
+      const Inputpassword = this.password; 
+      this.submitted = true; 
+      axios.post("http://192.168.1.15:3000/api/auth/signup", { name: Inputname, lastname: InputlastName, email: Inputemail, password: Inputpassword })
+      .then(function (response) {
+        if (response.status==="200") {
+          axios.post("http://192.168.1.15:3000/api/auth/login", {email : Inputemail, password: Inputpassword })
+          .then(function (response) {
+            localStorage.setItem("token", response.data.token)
+            localStorage.setItem("userId", response.data.userId)
+            localStorage.setItem("name", response.data.name)
+            localStorage.setItem("lastName", response.data.lastname)
+            localStorage.setItem("picture", response.data.picture)
+            localStorage.setItem("admin", response.data.admin)
+          })
+          .catch(function(error) {
+            const errorCode = error.message.split("code ")[1]
+            let messageError = ""
+            switch (errorCode){
+              case "401": messageError = "Mot de passe erroné";break
+              case "404": messageError = "User not found";break
+            }
+            console.log(messageError)
+          })
+        }
+      })
+      .catch(function(error) {
+        const errorCode = error.message.split("code ")[1]
+        let messageError = " "
+        switch (errorCode) {
+          case "401": messageError = "adresse mail déjà utilisée";break
+        }
+        console.log(messageError)
+      })
+    }
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
