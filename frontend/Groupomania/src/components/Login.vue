@@ -19,8 +19,12 @@
     
         <input type="submit" value="Connexion" class="form__btn">
 
+        <br /><div id="message--error"></div>
+        
         <br /><br /><router-link to="/Signup">Créer un compte</router-link>
       </form>
+      
+
     
     </div>
 </template>
@@ -58,7 +62,8 @@ export default {
           case "401": messageError = "Mot de passe erroné";break
           case "404": messageError = "User not found";break
         }
-        console.log(messageError)
+        const sectionMessage = document.getElementById('message--error'); 
+        sectionMessage.textContent = messageError;
       })
     }
   }

@@ -39,9 +39,12 @@
         </div>
     
         <button class="form__btn" id="btn--connect">Connexion</button>
+        
+        <br /><div id="message--error"></div>
 
         <br /><br /><router-link to="/">J'ai déjà un compte</router-link>
       </form>
+
     
     </div>
 </template>
@@ -85,7 +88,8 @@ export default {
               case "401": messageError = "Mot de passe erroné";break
               case "404": messageError = "User not found";break
             }
-            console.log(messageError)
+            const sectionMessage = document.getElementById('message--error'); 
+            sectionMessage.textContent = messageError;
           })
         }
       })
@@ -95,7 +99,8 @@ export default {
         switch (errorCode) {
           case "401": messageError = "adresse mail déjà utilisée";break
         }
-        console.log(messageError)
+        const sectionMessage = document.getElementById('message--error'); 
+        sectionMessage.textContent = messageError;
       })
     }
   }
