@@ -54,6 +54,7 @@ export default {
         localStorage.setItem("lastName", response.data.lastname)
         localStorage.setItem("picture", response.data.picture)
         localStorage.setItem("admin", response.data.admin)
+        window.location.href="/Home"
       })
       .catch(function(error) {
         const errorCode = error.message.split("code ")[1]
