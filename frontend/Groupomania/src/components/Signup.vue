@@ -69,10 +69,10 @@ export default {
       const Inputemail = this.email;
       const Inputpassword = this.password; 
       this.submitted = true; 
-      axios.post("http://192.168.1.15:3000/api/auth/signup", { name: Inputname, lastname: InputlastName, email: Inputemail, password: Inputpassword })
+      axios.post("http://localhost:3066/api/auth/signup", { name: Inputname, lastname: InputlastName, email: Inputemail, password: Inputpassword })
       .then(function (response) {
         if (response.status==="200") {
-          axios.post("http://192.168.1.15:3000/api/auth/login", {email : Inputemail, password: Inputpassword })
+          axios.post("http://localhost:3066/api/auth/signup", {email : Inputemail, password: Inputpassword })
           .then(function (response) {
             localStorage.setItem("token", response.data.token)
             localStorage.setItem("userId", response.data.userId)
