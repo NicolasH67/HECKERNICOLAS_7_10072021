@@ -67,12 +67,12 @@ export default {
       const Inputname = this.name;
       const InputlastName = this.lastname;
       const Inputemail = this.email;
-      const Inputpassword = this.password; 
+      const password = this.password; 
       this.submitted = true; 
-      axios.post("http://localhost:3066/api/auth/signup", { name: Inputname, lastname: InputlastName, email: Inputemail, password: Inputpassword })
+      axios.post("http://localhost:3066/api/auth/signup", { name: Inputname, lastname: InputlastName, email: Inputemail, password: password })
       .then(function (response) {
         if (response.status==="200") {
-          axios.post("http://localhost:3066/api/auth/signup", {email : Inputemail, password: Inputpassword })
+          axios.post("http://localhost:3066/api/auth/signup", {email : Inputemail, password: password })
           .then(function (response) {
             localStorage.setItem("token", response.data.token)
             localStorage.setItem("userId", response.data.userId)
