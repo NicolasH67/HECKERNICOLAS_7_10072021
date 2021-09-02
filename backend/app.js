@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 require('dotenv').config;
 const Sequelize = require('sequelize');
+const bodyParser = require('body-parser')
 
 const userRoutes = require('./routes/user');
 
@@ -24,6 +25,7 @@ try {
 }
 
 app.use(helmet()); 
+app.use(bodyParser.json())
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

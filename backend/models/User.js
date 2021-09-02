@@ -30,7 +30,8 @@ User.init(
         },
         picture: {
             type: DataTypes.STRING, 
-            allowNull: true
+            allowNull: false, 
+            default: "http://localhost:3066/images/icone-default.jpeg"
         }, 
         description: {
             type: DataTypes.STRING, 
