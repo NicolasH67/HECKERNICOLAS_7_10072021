@@ -1,10 +1,7 @@
-const { Sequelize, Model, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory');
+const {DataTypes} = require("sequelize"); 
 
-class User extends Model {}
-
-User.init(
-    {
+module.exports = (sequelize, Sequelize) => {
+    const User = sequelize.define('User', {
         userId: {
             type: Sequelize.INTEGER, 
             autoIncrement: true, 
@@ -42,9 +39,6 @@ User.init(
             allowNull: false, 
             default: false
         }
-    }, 
-    {
-        sequelize, 
-        modelName: 'User'
-    }
-)
+    }); 
+    return User; 
+}
