@@ -2,24 +2,27 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
 const User = require('../models/User')
 
-
 // signup function
-exports.signup = (req, res) => {
+exports.signup = (req, res, next) => {
     console.log([req.body.name, req.body.lastname, req.body.email, req.body.password]);
     let user = new User({
         name: req.body.name,
         lastname: req.body.lastname,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        description: null, 
+        picture: "http://localhost:3066/images/icone-default.jpeg", 
+        admin: false
     })
     user.save()
     .then(() => res.status(201).json({ message: 'User created'}))
     .catch(error => res.status(400).json({ error }))
     .catch(error => res.status(500).json({ error }))
+    next()
 }
 
 // login function
-exports.login = (req, res) => {
+exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
@@ -41,4 +44,5 @@ exports.login = (req, res) => {
                 })
                 .catch(error => res.status(500).json({ error }))
         })
+    next()
 }
