@@ -56,7 +56,7 @@ export default {
       this.submitted = true; 
       axios.post("http://localhost:3066/api/auth/signup", { name: name, lastname: lastName, email: mail, password: password })
       .then(function (response) {
-        if (response.status==="200") {
+        if (response.status==="201") {
           axios.post("http://localhost:3066/api/auth/login", {email : mail, password: password })
           .then(function (response) {
             localStorage.setItem("token", response.data.token)
