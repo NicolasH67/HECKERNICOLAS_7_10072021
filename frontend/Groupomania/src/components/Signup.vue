@@ -61,9 +61,6 @@ export default {
           .then(function (response) {
             localStorage.setItem("token", response.data.token)
             localStorage.setItem("userId", response.data.userId)
-            localStorage.setItem("name", response.data.name)
-            localStorage.setItem("lastName", response.data.lastname)
-            localStorage.setItem("picture", response.data.picture)
             localStorage.setItem("admin", response.data.admin)
             window.location.href="/Home"
           })

@@ -1,5 +1,4 @@
 const JWT = require("jsonwebtoken");
-const config = require("../config/config");
 
 function issueJWT(user) {
   // on génére le token
@@ -9,9 +8,9 @@ function issueJWT(user) {
     sub: id,
     iat: Date.now(),
   };
-  const signedToken = JWT.sign(payload, "secret", { expiresIn: expiresIn });
+  const signedToken = JWT.sign(payload, "RANDOM_TOKEN_SECRET", { expiresIn: expiresIn });
   return {
-    token: "Bearer " + signedToken,
+    token: signedToken,
     expires: expiresIn,
   };
 }
