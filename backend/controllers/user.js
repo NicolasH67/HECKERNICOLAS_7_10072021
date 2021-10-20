@@ -1,8 +1,6 @@
 const bcrypt = require('bcrypt'); 
 const db = require('../models'); 
-const fs = require('fs'); 
-const { Op } = require('sequelize'); 
-const token = require('../middleware/token'); 
+const JWT = require('jsonwebtoken')
 
 exports.signup = async (req, res, next) => {
     try {
@@ -23,43 +21,9 @@ exports.signup = async (req, res, next) => {
                 isAdmin: false, 
             }); 
             console.log(newUser)
-            return res.status(201).send({ 
-              message: "utilisateur créer", 
-              idUSER: user.idUSER,
-              token: tokenObject.token,
-              sub: tokenObject.sub,
-              expires: tokenObject.expiresIn,
-              isAdmin: isAdmin
-             })
         }
     } catch (error) {
         res.statuts(400).send({ error: "email déjà utilisé" })
     }
 }; 
 
-exports.login = async (req, res) => {
-    try {
-      const user = await db.User.findOne({
-        where: { email: req.body.email },
-      });
-      if (user === null) {
-        return res.status(403).send({ error: "Connexion échouée" });
-      } else {
-        const hash = await bcrypt.compare(req.body.password, user.password);
-        if (!hash) {
-          return res.status(401).send({ error: "Mot de passe incorrect !" });
-        } else {
-          const tokenObject = await token.issueJWT(user);
-          res.status(200).send({
-            idUSER: user.idUSER,
-            token: tokenObject.token,
-            sub: tokenObject.sub,
-            expires: tokenObject.expiresIn,
-            isAdmin: isAdmin
-          });
-        }
-      }
-    } catch (error) {
-      return res.status(500).send({ error: "Erreur serveur" });
-    }
-  };

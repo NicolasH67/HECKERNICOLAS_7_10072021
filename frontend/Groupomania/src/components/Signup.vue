@@ -31,7 +31,7 @@
     
         </div>
     
-        <button class="form__btn" id="btn--connect">Connexion</button>
+        <button class="form__btn" id="btn--connect">Inscription</button>
       
         <br /><div id="message--error"></div>
 
@@ -56,24 +56,9 @@ export default {
       this.submitted = true; 
       axios.post("http://localhost:3066/api/auth/signup", { name: name, lastname: lastName, email: mail, password: password })
       .then(function (response) {
-        if (response.status==="201") {
-          axios.post("http://localhost:3066/api/auth/login", {email : mail, password: password })
-          .then(function (response) {
-            localStorage.setItem("token", response.data.token)
-            localStorage.setItem("userId", response.data.userId)
-            localStorage.setItem("admin", response.data.admin)
-            window.location.href="/Home"
-          })
-          .catch(function(error) {
-            const errorCode = error.message.split("code ")[1]
-            let messageError = ""
-            switch (errorCode){
-              case "401": messageError = "Mot de passe erroné";break
-              case "404": messageError = "User not found";break
-            }
-            const sectionMessage = document.getElementById('message--error'); 
-            sectionMessage.textContent = messageError;
-          })
+        console.log(response)
+        if (response.status=== "201") {
+          window.location.href="/login"
         }
       })
       .catch(function(error) {

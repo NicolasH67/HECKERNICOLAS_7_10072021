@@ -6,8 +6,8 @@
     
         <div class="form__group">
     
-          <label for="username">Votre e-mail prefessionnel</label><br />
-          <input type="text" name="username" id="username">
+          <label for="mail">Votre e-mail prefessionnel</label><br />
+          <input type="text" name="mail" id="mail">
     
         </div>
 
@@ -18,7 +18,7 @@
     
         </div>
     
-        <input type="submit" value="Connexion" class="form__btn">
+        <button class="form__btn" id="btn--connect">Connexion</button>
 
         <br /><div id="message--error"></div>
         
@@ -33,26 +33,17 @@
 
 <script>
 const axios = require('axios')
-
 export default {
-  name: 'login', 
-  data() {
-    return {
-      email: "",
-      password: "",
-      submitted: false
-    }
-  }, 
   methods: {
     submit() {
-      const inputEmail = this.email; 
-      const inputPassword = this.password;
+      const mail = document.getElementById('mail').value;
+      const password = document.getElementById('password').value;
       this.submitted = true; 
-      axios.post("localhost:3066/api/auth/login", {email : inputEmail, password: inputPassword })
+      console.log(mail, password)
+      axios.post("localhost:3066/api/auth/login", {email : mail, password: password })
       .then(function (response) {
         localStorage.setItem("token", response.data.token)
         localStorage.setItem("userId", response.data.userId)
-        localStorage.setItem("admin", response.data.admin)
         window.location.href="/Home"
       })
       .catch(function(error) {
