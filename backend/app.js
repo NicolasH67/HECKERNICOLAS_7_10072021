@@ -9,18 +9,6 @@ const userRoutes = require('./routes/user');
 // Connexion à la DB 
 const { sequelize } = require('./models/index'); 
 
-// application express. 
-
-const app = express(); 
-
-app.use(helmet())
-
-app.use(cors())
-
-app.use(express.json())
-
-app.use('/api/auth', userRoutes); 
-
 const dbConnect = async function () {
     try {
         await sequelize.authenticate(); 
@@ -30,5 +18,18 @@ const dbConnect = async function () {
     }
 }; 
 dbConnect(); 
+
+// application express. 
+
+const app = express(); 
+
+app.use(helmet());
+
+app.use(cors({origin :true}));
+
+app.use(express.json());
+
+app.use('/api/auth', userRoutes); 
+
 
 module.exports = app; 

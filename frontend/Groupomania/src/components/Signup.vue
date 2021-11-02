@@ -33,7 +33,7 @@
     
         <button class="form__btn" id="btn--connect">Inscription</button>
       
-        <br /><div id="message--error"></div>
+        <br /><br /><div id="message--error"></div>
 
         <br /><br /><router-link to="/">J'ai déjà un compte</router-link>
 
@@ -56,16 +56,14 @@ export default {
       this.submitted = true; 
       axios.post("http://localhost:3066/api/auth/signup", { name: name, lastname: lastName, email: mail, password: password })
       .then(function (response) {
-        console.log(response)
-        if (response.status=== "201") {
-          window.location.href="/login"
-        }
+          console.log(response.status)
+          window.location.href="/"
       })
       .catch(function(error) {
         const errorCode = error.message.split("code ")[1]
-        let messageError = " "
+        let messageError = ""
         switch (errorCode) {
-          case "401": messageError = "adresse mail déjà utilisée";break
+          case "400": messageError = "adresse mail déjà utilisée !";break
         }
         const sectionMessage = document.getElementById('message--error'); 
         sectionMessage.textContent = messageError;
@@ -105,6 +103,12 @@ export default {
     &:hover {
       transform: scale(1.15);
     }
+  }
+  #message--error {
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #F53008;
   }
   @media screen and (min-width: 768px) {
     width: 400px;
