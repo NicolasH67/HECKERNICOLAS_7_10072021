@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
   };
   Message.init({
     idUSERS: DataTypes.INTEGER,
-    title: DataTypes.STRING,
     content: DataTypes.STRING,
     picture: DataTypes.STRING,
     like: DataTypes.INTEGER,

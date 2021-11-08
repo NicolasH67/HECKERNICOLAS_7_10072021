@@ -38,8 +38,8 @@ export default {
     submit() {
       const mail = document.getElementById('mail').value;
       const password = document.getElementById('password').value;
-      this.submitted = true; 
       console.log(mail, password)
+      this.submitted = true; 
       axios.post("localhost:3066/api/auth/login", {email : mail, password: password })
       .then(function (response) {
         localStorage.setItem("token", response.data.token)

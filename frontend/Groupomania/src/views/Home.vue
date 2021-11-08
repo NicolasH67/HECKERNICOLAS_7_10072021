@@ -36,7 +36,7 @@ export default {
         flex-direction: column;
         @media screen and (max-width: 768px) {
             flex-direction: row;
-            width: 100%;
+            width: 106%;
             margin-right: 0px;
             height: auto;
         }
