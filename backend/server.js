@@ -1,9 +1,10 @@
 const http = require('http');
 const app = require('./app');
+const cors = require('cors')
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
-
+  
   if (isNaN(port)) {
     return val;
   }
@@ -27,17 +28,18 @@ const errorHandler = error => {
       console.error(bind + ' requires elevated privileges.');
       process.exit(1);
       break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use.');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
-
+      case 'EADDRINUSE':
+        console.error(bind + ' is already in use.');
+        process.exit(1);
+        break;
+        default:
+          throw error;
+        }
+      };
+      
 const server = http.createServer(app);
-
+      
+server.use(cors())
 server.on('error', errorHandler);
 server.on('listening', () => {
   const address = server.address();
