@@ -56,6 +56,12 @@ export default {
             text-decoration: none;
             font-style: italic;
             margin: 15px auto auto auto;
+            &:hover {
+                  font-weight: bold;
+                  border: 3px solid #F53008;
+                  border-radius: 10px;
+                  box-shadow: 0px 0px 15px #F53008;
+            }
         }
     }
 }

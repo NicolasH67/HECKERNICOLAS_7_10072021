@@ -40,7 +40,7 @@ export default {
       const password = document.getElementById('password').value;
       console.log(mail, password)
       this.submitted = true; 
-      axios.post("localhost:3066/api/auth/login", {email : mail, password: password })
+      axios.post("http://localhost:3066/api/auth/login", {email : mail, password: password })
       .then(function (response) {
         localStorage.setItem("token", response.data.token)
         localStorage.setItem("userId", response.data.userId)
