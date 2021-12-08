@@ -81,7 +81,7 @@ export default {
             height: 10%;
             margin-top: 50px;
             &:hover {
-                background-color: #ffd6d8;
+                background-color: #dbdbdb;
             }
         }
     }
