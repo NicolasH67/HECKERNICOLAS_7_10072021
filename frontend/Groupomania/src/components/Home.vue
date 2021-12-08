@@ -71,12 +71,15 @@ export default {
         border-radius: 0 15px 15px 0;
         &--like, &--dislike {
             width: 50%;
+            height: 10%;
             &:hover {
                 background-color: #ffd6d8;
             }
         }
         &--comment {
             width: 100%;
+            height: 10%;
+            margin-top: 50px;
             &:hover {
                 background-color: #ffd6d8;
             }
