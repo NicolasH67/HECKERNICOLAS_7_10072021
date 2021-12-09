@@ -51,7 +51,7 @@ export default {
         let messageError = ""
         switch (errorCode){
           case "401": messageError = "Mot de passe erroné";break
-          case "404": messageError = "User not found";break
+          case "404": messageError = "Utilisateur n'existe pas";break
         }
         const sectionMessage = document.getElementById('message--error'); 
         sectionMessage.textContent = messageError;
@@ -95,5 +95,13 @@ export default {
   @media screen and (min-width: 768px) {
     width: 400px;
   }
+}
+#message--error{
+  color: #F53008;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-style: italic;
+  padding-top: 25px;
+  margin-bottom: -20px;
 }
 </style>

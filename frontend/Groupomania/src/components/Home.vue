@@ -6,12 +6,18 @@
         </button>
         <div class="content__message">
             <div class="message">
+                <h5>nom de la personne</h5>
                 <p class="message__text">Superatis Tauri montis verticibus qui ad solis ortum sublimius attolluntur, Cilicia spatiis porrigitur late distentis dives bonis omnibus terra, eiusque lateri dextro adnexa Isauria, pari sorte uberi palmite viget et frugibus minutis, quam mediam navigabile flumen Calycadnus interscindit.<br /><br />Sed quid est quod in hac causa maxime homines admirentur et reprehendant meum consilium, cum ego idem antea multa decreverim, que magis ad hominis dignitatem quam ad rei publicae necessitatem pertinerent? Supplicationem quindecim dierum decrevi sententia mea. Rei publicae satis erat tot dierum quot C. Mario ; dis immortalibus non erat exigua eadem gratulatio quae ex maximis bellis. Ergo ille cumulus dierum hominis est dignitati tributus.<br /><br />Cum autem commodis intervallata temporibus convivia longa et noxia coeperint apparari vel distributio sollemnium sportularum, anxia deliberatione tractatur an exceptis his quibus vicissitudo debetur, peregrinum invitari conveniet, et si digesto plene consilio id placuerit fieri, is adhibetur qui pro domibus excubat aurigarum aut artem tesserariam profitetur aut secretiora quaedam se nosse confingit.</p>
             </div>
             <div class="message__option">
                 <button class="message__option--like">j'aime</button>
                 <button class="message__option--dislike"> j'aime pas</button>
                 <button class="message__option--comment">commenter</button>
+                <div class="message__option__lastcomment">
+                    <h5>Dernier commentaire : </h5>
+                    <p>nom de la personne</p>
+                    <p>le commentaire aozijerozpa i reoij poijrzopji roiazjr poa jiro pzaijr rojizaoijrepo ijazor ijporei jaoper ijaopr ijzeop rijza ropijzeop erij roiezjezpor iajezr opjopijre zopi rzr</p>
+                </div>
             </div>
         </div>
       
@@ -81,7 +87,7 @@ export default {
             height: 10%;
             margin-top: 50px;
             &:hover {
-                background-color: #dbdbdb;
+                background-color: #ffd6d8;
             }
         }
     }
