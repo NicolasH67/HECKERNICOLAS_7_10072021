@@ -3,10 +3,10 @@
     <div class="content">
         <div class="profil">
             <h2>Votre profil : </h2>
-            <img src="default.jpeg" alt="Votre photo">
-            <p>Bonjour, Nom Prenom</p><button>Modifier votre nom et prénom</button>
+            <p>Bonjour, Nom Prenom<br /><button>Modifier votre nom et prénom</button></p>
+            <img src="default.jpeg" alt="Votre photo"><br /><button>Modifier votre photo</button>
             <h3>Votre bio : </h3>
-            <p>boutre apoizajerpioj zorieja poiezj </p><button>Modifier votre bio</button>
+            <p>boutre apoizajerpioj zorieja poiezj<br /><button>Modifier votre bio</button></p>
         </div>
         <div class="publication">
             <button class="btn" id="btn" @click="post">
@@ -27,6 +27,7 @@
                         <p>nom de la personne</p>
                         <p>le commentaire aozijerozpa i reoij poijrzopji roiazjr poa jiro pzaijr rojizaoijrepo ijazor ijporei jaoper ijaopr ijzeop rijza ropijzeop erij roiezjezpor iajezr opjopijre zopi rzr</p>
                     </div>
+                    <button class="message__option--modif">modifier la publication</button>
                 </div>
             </div>
         </div>
@@ -68,6 +69,7 @@ export default {
 }
 .profil {
     width: 30%;
+    padding-top: 50px;
 }
 .btn {
     width: 75%;
@@ -86,7 +88,7 @@ export default {
     border: 5px solid #F53008;
     width: 75%;
     text-align: justify;
-    padding: 15px;
+    padding: 25px;
     border-radius: 15px 0 0 15px;
     &__option {
         width: 20%;
@@ -103,6 +105,13 @@ export default {
             width: 100%;
             height: 10%;
             margin-top: 50px;
+            &:hover {
+                background-color: #ffd6d8;
+            }
+        }
+        &--modif {
+            width: 100%;
+            height: 10%;
             &:hover {
                 background-color: #ffd6d8;
             }
