@@ -1,12 +1,13 @@
 <template>
-
+    
     <div class="content">
         <div class="profil">
+            
             <h2>Votre profil : </h2>
-            <p>Bonjour, Nom Prenom<br /><button>Modifier votre nom et prénom</button></p>
-            <img src="default.jpeg" alt="Votre photo"><br /><button>Modifier votre photo</button>
+            <p>Bonjour, <span id="name"></span><span id="lastName"></span><br /><button>Modifier votre nom et prénom</button></p>
+            <img src="" alt="Votre photo" id="picture"><br /><button>Modifier votre photo</button>
             <h3>Votre bio : </h3>
-            <p>boutre apoizajerpioj zorieja poiezj<br /><button>Modifier votre bio</button></p>
+            <p id="bio"><br /><button>Modifier votre bio</button></p>
         </div>
         <div class="publication">
             <button class="btn" id="btn" @click="post">
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+const axios = require('axios')
 export default {
   methods: {
       post() {
@@ -46,7 +48,39 @@ export default {
               e.preventDefault()
               window.location.href = "/Post"
           })
-      }
+      },
+      
+      getUser() {
+          
+      const userId = localStorage.getItem('id')
+      axios.get("http://localhost:3066/api/auth/profil", {userId : userId})
+      .then(function (response) {
+          const name = response.data.name; 
+          const lastName = response.data.lastName;
+          const picture = response.data.picture;
+          const bio = response.data.bio; 
+
+          console.log(name, lastName, picture, bio)
+
+          const spanName = document.getElementById('name');
+          const spanLastName = document.getElementById('lastName');
+          const idPicture = document.getElementById('picture');
+          const idBio = document.getElementById('bio');
+          
+          spanName.textContent = name;
+          spanLastName.textContent = lastName;
+          idPicture.src = picture;
+
+          if(bio === null) {
+              idBio.textContent = "Veuillez remplir votre biographie"
+          } else {
+              idBio.textContent = bio
+          }
+      })
+      .catch(function() {
+        window.location.href = "/"
+      })
+    }
   }
 }
 </script>

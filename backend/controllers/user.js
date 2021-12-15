@@ -40,10 +40,11 @@ exports.login = async (req, res, next) => {
         if (!hash) {
           return res.status(401).send({ error: "Mot de passe incorrect !" });
         } else {
+          console.log(user.id)
           return res.status(200).send({
-            userId: user._id,
+            userId: user.id,
             token: JWT.sign(
-              { userId: user._id },
+              { userId: user.id },
               'RANDOM_TOKEN_SECRET',
               { expiresIn: '24h' }
             )
@@ -53,4 +54,25 @@ exports.login = async (req, res, next) => {
     } catch (error) {
       return res.status(500).send({ error: "Erreur serveur" });
     }
-  };
+  }
+
+  exports.findOneUser = async (req, res, next) => {
+    try {
+      const user = await db.User.findOne({
+        where: { id: req.body.userId }, 
+      });
+      if (user === null) {
+        return res.status(404).send( error ); 
+      } else {
+        return res.status(200).send({
+          name: user.name, 
+          lastname: user.lastname, 
+          bio: user.bio, 
+          picture: user.picture, 
+
+        });
+      };
+    } catch (error) {
+      return res.status(500).send({ error })
+    };
+  }; 
