@@ -51,6 +51,7 @@ export default {
 
     methods: {
         async getUser() {
+            console.log("fonction start")
             try {
                 const response = await this.$http.get(
                     "http://localhost:3066/api/auth/profil"
