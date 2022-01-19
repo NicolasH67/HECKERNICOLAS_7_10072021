@@ -19,9 +19,32 @@
 </template>
 
 <script>
+const axios = require('axios');
 export default {
+  methods: {
+    submit() {
+      const content = document.getElementById('txt').value;
+      const picture = document.getElementById('picture').value;
+      this.submitted = true; 
+      axios.post("http://localhost:3066/api/post", { content: content, picture: picture })
+      .then(function (response) {
+          console.log(response.status)
+          window.location.href="/"
+      })
+      .catch(function(error) {
+        const errorCode = error.message.split("code ")[1]
+        let messageError = ""
+        switch (errorCode) {
+          case "400": messageError = "error";break
+        }
+        const sectionMessage = document.getElementById('message--error'); 
+        sectionMessage.textContent = messageError;
+      })
+    }
+  }
 }
 </script>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">

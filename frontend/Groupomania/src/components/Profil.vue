@@ -1,13 +1,17 @@
 <template>
     
     <div class="content">
-        <div class="profil">
+        <div class="profil" v-for="user in user" v-bind:key="user.id">
+            <button class="btn" id="btn">
+                Modifier mon profil
+            </button>
             
             <h2>Votre profil : </h2>
-            <p>Bonjour, <span id="name"></span><span id="lastName"></span><br /><button>Modifier votre nom et prénom</button></p>
-            <img src="" alt="Votre photo" id="picture"><br /><button>Modifier votre photo</button>
+            <p>Bonjour, {{ user.name }} {{ user.lastname }} <br /></p>
+            <img src={{ user.picture }} alt="Votre photo" id="picture"><br />
             <h3>Votre bio : </h3>
-            <p id="bio"><br /><button>Modifier votre bio</button></p>
+            <p id="bio">{{ user.bio }}<br /></p>
+
         </div>
         <div class="publication">
             <button class="btn" id="btn" @click="post">
@@ -38,51 +42,30 @@
 </template>
 
 <script>
-const axios = require('axios')
 export default {
-  methods: {
-      post() {
-          const btnPost = document.getElementById('btn'); 
+    data() {
+        return {
+            user: [],
+        };
+    }, 
 
-          btnPost.addEventListener('click', (e) => {
-              e.preventDefault()
-              window.location.href = "/Post"
-          })
-      },
-      
-      getUser() {
-          
-      const userId = localStorage.getItem('id')
-      axios.get("http://localhost:3066/api/auth/profil", {userId : userId})
-      .then(function (response) {
-          const name = response.data.name; 
-          const lastName = response.data.lastName;
-          const picture = response.data.picture;
-          const bio = response.data.bio; 
+    methods: {
+        async getUser() {
+            try {
+                const response = await this.$http.get(
+                    "http://localhost:3066/api/auth/profil"
+                ); 
+                this.user = response.data; 
+            } catch (error) {
+                console.log(error);
+            }
+        }, 
+    },
 
-          console.log(name, lastName, picture, bio)
-
-          const spanName = document.getElementById('name');
-          const spanLastName = document.getElementById('lastName');
-          const idPicture = document.getElementById('picture');
-          const idBio = document.getElementById('bio');
-          
-          spanName.textContent = name;
-          spanLastName.textContent = lastName;
-          idPicture.src = picture;
-
-          if(bio === null) {
-              idBio.textContent = "Veuillez remplir votre biographie"
-          } else {
-              idBio.textContent = bio
-          }
-      })
-      .catch(function() {
-        window.location.href = "/"
-      })
+    created() {
+        this.getUser();
     }
-  }
-}
+}; 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -103,7 +86,6 @@ export default {
 }
 .profil {
     width: 30%;
-    padding-top: 50px;
 }
 .btn {
     width: 75%;
