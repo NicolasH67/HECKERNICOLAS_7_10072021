@@ -1,16 +1,16 @@
 <template>
     
     <div class="content">
-        <div class="profil" v-for="user in user" v-bind:key="user.id">
+        <div class="profil">
             <button class="btn" id="btn">
                 Modifier mon profil
             </button>
             
             <h2>Votre profil : </h2>
-            <p>Bonjour, {{ user.name }}, {{ user.lastname }} <br /></p>
-            <img src={{ user.picture }} alt="Votre photo" id="picture"><br />
+            <p>Bonjour,{{ user.name }}, {{ user.lastname }}<br /></p>
+            <img src="{{ user.picture }}" alt="Votre photo" id="picture"><br />
             <h3>Votre bio : </h3>
-            <p id="bio">{{ user.bio }}<br /></p>
+            <p id="bio">{{ user.bio }} <br /></p>
 
         </div>
         <div class="publication">
