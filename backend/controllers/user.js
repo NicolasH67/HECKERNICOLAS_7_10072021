@@ -56,23 +56,17 @@ exports.login = async (req, res, next) => {
     }
   }
 
-  exports.findOneUser = async (req, res, next) => {
-    try {
-      const user = await db.User.findOne({
-        where: { id: req.body.userId }, 
-      });
-      if (user === null) {
-        return res.status(404).send( error ); 
-      } else {
-        return res.status(200).send({
-          name: user.name, 
-          lastname: user.lastname, 
-          bio: user.bio, 
-          picture: user.picture, 
-
-        });
-      };
-    } catch (error) {
-      return res.status(500).send({ error })
-    };
-  }; 
+  exports.findOneUser = (req, res, next) => {
+    console.log(req.params.id)
+    db.User.findOne({
+      id: req.params.id,
+    })
+    .then((User) => {
+      res.status(200).json(User)
+    })
+    .catch((error) => {
+      res.status(404).json({
+        error: error, 
+      })
+    })
+  }

@@ -7,14 +7,14 @@
             </button>
             
             <h2>Votre profil : </h2>
-            <p>Bonjour, {{ user.name }} {{ user.lastname }} <br /></p>
+            <p>Bonjour, {{ user.name }}, {{ user.lastname }} <br /></p>
             <img src={{ user.picture }} alt="Votre photo" id="picture"><br />
             <h3>Votre bio : </h3>
             <p id="bio">{{ user.bio }}<br /></p>
 
         </div>
         <div class="publication">
-            <button class="btn" id="btn" @click="post">
+            <button class="btn" id="btn">
                 créer une publication
             </button>
             <h2>Vos dernières publications</h2>
@@ -51,12 +51,14 @@ export default {
 
     methods: {
         async getUser() {
-            console.log("fonction start")
+            const userId = localStorage.getItem("userId")
+            console.log("userId is ", userId)
             try {
                 const response = await this.$http.get(
-                    "http://localhost:3066/api/auth/profil"
+                   `http://localhost:3066/api/auth/profil/${userId}`
                 ); 
                 this.user = response.data; 
+                console.log(this.user)
             } catch (error) {
                 console.log(error);
             }
