@@ -1,14 +1,14 @@
 <template>
-    
+
     <div class="content">
         <div class="profil">
             <button class="btn" id="btn">
                 Modifier mon profil
             </button>
-            
+
             <h2>Votre profil : </h2>
-            <p>Bonjour,{{ user.name }}, {{ user.lastname }}<br /></p>
-            <img src="{{ user.picture }}" alt="Votre photo" id="picture"><br />
+            <p>Bonjour, <span class="name">{{ user.name }}</span>, <span class="lastname">{{ user.lastname }}</span><br /></p>
+            <img src="" alt="Votre photo" id="picture"><br />
             <h3>Votre bio : </h3>
             <p id="bio">{{ user.bio }} <br /></p>
 
@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-      
+
     </div>
 
 </template>
@@ -47,7 +47,7 @@ export default {
         return {
             user: [],
         };
-    }, 
+    },
 
     methods: {
         async getUser() {
@@ -56,19 +56,19 @@ export default {
             try {
                 const response = await this.$http.get(
                    `http://localhost:3066/api/auth/profil/${userId}`
-                ); 
-                this.user = response.data; 
+                );
+                this.user = response.data;
                 console.log(this.user)
             } catch (error) {
                 console.log(error);
             }
-        }, 
+        },
     },
 
     created() {
         this.getUser();
     }
-}; 
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -136,5 +136,12 @@ export default {
             }
         }
     }
+}
+.name {
+text-transform: uppercase;
+}
+
+.lastname {
+text-transform: capitalize; 
 }
 </style>
