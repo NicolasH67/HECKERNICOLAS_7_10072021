@@ -29,9 +29,7 @@
 export default {
   methods: {
       post() {
-          const btnPost = document.getElementById('btn'); 
-
-          btnPost.addEventListener('click', (e) => {
+          addEventListener('click', (e) => {
               e.preventDefault()
               window.location.href = "/Post"
           })

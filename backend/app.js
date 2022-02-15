@@ -1,7 +1,8 @@
 // framework 
 const express = require('express'); 
 const helmet = require('helmet'); 
-const cors = require('cors')
+const cors = require('cors'); 
+const path = require('path')
 
 // route 
 const userRoutes = require('./routes/user'); 
@@ -34,6 +35,8 @@ app.use(cors(corsOptions));
 app.use(helmet());
 
 app.use(express.json());
+
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use('/api/auth', userRoutes); 
 

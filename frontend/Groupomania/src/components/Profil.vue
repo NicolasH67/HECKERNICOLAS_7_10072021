@@ -2,19 +2,24 @@
 
     <div class="content">
         <div class="profil">
-            <button class="btn" id="btn">
+            <button class="btn" id="ProfilBtn" @click="profil">
                 Modifier mon profil
             </button>
 
             <h2>Votre profil : </h2>
             <p>Bonjour, <span class="name">{{ user.name }}</span>, <span class="lastname">{{ user.lastname }}</span><br /></p>
-            <img src="" alt="Votre photo" id="picture"><br />
+                <img
+                  v-if="user.picture"
+                  :src="user.picture"
+                  alt="Photo de profil"
+                  class="picture"
+                />
             <h3>Votre bio : </h3>
             <p id="bio">{{ user.bio }} <br /></p>
 
         </div>
         <div class="publication">
-            <button class="btn" id="btn">
+            <button class="btn" id="btn" @click="post">
                 créer une publication
             </button>
             <h2>Vos dernières publications</h2>
@@ -50,6 +55,20 @@ export default {
     },
 
     methods: {
+        post() {
+          addEventListener('click', (e) => {
+              e.preventDefault()
+              window.location.href = "/Post"
+          })
+      },
+
+      profil() {
+            addEventListener('click', (e) => {
+                e.preventDefault()
+                window.location.href = "/ProfilModify"
+          })
+      },
+
         async getUser() {
             const userId = localStorage.getItem("userId")
             console.log("userId is ", userId)
@@ -138,10 +157,14 @@ export default {
     }
 }
 .name {
-text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .lastname {
-text-transform: capitalize; 
+    text-transform: capitalize; 
+}
+.picture {
+    width: 100px; 
+    height: 100px;
 }
 </style>
