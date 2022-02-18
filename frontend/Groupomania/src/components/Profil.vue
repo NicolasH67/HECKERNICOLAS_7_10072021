@@ -8,12 +8,7 @@
 
             <h2>Votre profil : </h2>
             <p>Bonjour, <span class="name">{{ user.name }}</span>, <span class="lastname">{{ user.lastname }}</span><br /></p>
-                <img
-                  v-if="user.picture"
-                  :src="user.picture"
-                  alt="Photo de profil"
-                  class="picture"
-                />
+                <img v-if="user.picture" :src="user.picture" alt="Photo de profil" class="picture" />
             <h3>Votre bio : </h3>
             <p id="bio">{{ user.bio }} <br /></p>
 

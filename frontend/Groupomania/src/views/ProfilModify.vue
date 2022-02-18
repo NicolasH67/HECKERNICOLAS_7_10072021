@@ -10,7 +10,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import ProfilModify from '@/components/ProfilModify.vue'
 
 export default {
