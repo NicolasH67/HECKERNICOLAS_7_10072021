@@ -23,7 +23,7 @@ dbConnect();
 
 const corsOptions = {
     origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    optionsSuccessStatus: 200
   }
 
 // application express. 
@@ -31,13 +31,9 @@ const corsOptions = {
 const app = express(); 
 
 app.use(cors(corsOptions));
-
 app.use(helmet());
-
 app.use(express.json());
-
-app.use("/images", express.static(path.join(__dirname, "images")));
-
 app.use('/api/auth', userRoutes); 
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app; 

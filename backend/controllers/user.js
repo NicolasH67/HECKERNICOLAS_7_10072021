@@ -72,48 +72,23 @@ exports.login = async (req, res, next) => {
     })
   };
 
-  exports.update = (req, res, next) => {
-    db.User.findOne({
-      id: req.params.id,
-    })
-    .then((User) => {
-      if(req.body.picture !== null) {
-        if(User.picture === "http://localhost:3066/images/icone-default.jpeg") {
-          newPicture = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-          console.log(newPicture);
-          User.picture = newPicture;
-          } else {
-            const filename = User.picture.split("/images")[1]
-            fs.unlink(`images/${filename}`, (err) => {
-              if (err) console.log(err);
-              else {
-                console.log(`Deleted file: upload/${filename}`);
-              }
-            });
-            newPicture = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-            console.log(newPicture);
-            User.picture = newPicture;
-          }
-        } else {
-          console.log("no change")
-        }
-      if(req.body.name !== User.name) {
-        User.name = req.body.name
+  exports.update = async (req, res, next) => {
+    try {
+      const user = await db.User.findOne({
+          where: { id: req.params.id } 
+      }); 
+      if (user === null) {
+          return res.status(404).send({ error: "Vous n'etes pas connecter" });
       } else {
-        console.log("no change")
+          const updateUser = await db.User.update({
+              name: req.body.name, 
+              lastname: req.body.lastname, 
+              bio: req.body.bio,
+          });
+          console.log(updateUser)
+          return res.status(201).send({ error: "utilisateur créer" });
       }
-      if(req.body.lastname !== User.lastname) {
-        User.lastname = req.body.lastname
-      } else {
-        console.log("no change")
-      }
-      if(req.body.bio !== User.bio) {
-        User.name = req.body.bio
-      } else {
-        console.log("no change")
-      }
-    })
-    .catch((error) => {
-      return res.status(500).send({ error: "Erreur serveur" });
-    })
+    } catch (error) {
+      return res.status(403).send({ error });
+    }
   }
