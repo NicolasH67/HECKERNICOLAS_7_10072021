@@ -58,7 +58,6 @@ exports.login = async (req, res, next) => {
   }
 
   exports.findOneUser = (req, res, next) => {
-    console.log(req.params.id)
     db.User.findOne({
       id: req.params.id,
     })
@@ -80,15 +79,26 @@ exports.login = async (req, res, next) => {
       if (user === null) {
           return res.status(404).send({ error: "Vous n'etes pas connecter" });
       } else {
-          const updateUser = await db.User.update({
-              name: req.body.name, 
-              lastname: req.body.lastname, 
-              bio: req.body.bio,
-          });
-          console.log(updateUser)
-          return res.status(201).send({ error: "utilisateur créer" });
-      }
+        console.log(req.body);
+        const updateUser = await db.User.update(
+          {
+            name: req.body.name, 
+            lastname: req.body.lastname, 
+            bio: req.body.bio,
+          },
+          {
+            where: {id: req.params.id}
+          })
+          .then(function(User) {
+            return res.status(200).json(User)
+          })
+          .catch(function(error) {
+            console.log(error);
+            return res.status(400).send({ error });
+          })
+        }
     } catch (error) {
-      return res.status(403).send({ error });
+      console.log(error)
+      return res.status(400).send({ error });
     }
   }

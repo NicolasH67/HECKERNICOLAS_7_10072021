@@ -42,6 +42,7 @@
 </template>
 
 <script>
+const axios = require("axios"); 
 export default {
     data() {
         return {
@@ -66,10 +67,15 @@ export default {
 
         async getUser() {
             const userId = localStorage.getItem("userId")
+            const token = localStorage.getItem("token")
             console.log("userId is ", userId)
             try {
-                const response = await this.$http.get(
-                   `http://localhost:3066/api/auth/profil/${userId}`
+                const response = await axios.get(
+                   `http://localhost:3066/api/auth/profil/${userId}`,{
+                       headers: {
+                           'authorization': token
+                       }
+                   }
                 );
                 this.user = response.data;
                 console.log(this.user)

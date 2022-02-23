@@ -51,7 +51,7 @@ export default {
             const bio = document.getElementById('bio').value;
             console.log(name, lastName, picture, bio)
             this.submitted = true; 
-            axios.post(
+            axios.put(
             `http://localhost:3066/api/auth/profil/${userId}`, 
             { name: name, lastname: lastName, picture: picture, bio: bio }
             )
