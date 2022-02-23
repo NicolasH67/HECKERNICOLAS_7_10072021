@@ -71,7 +71,8 @@ export default {
             console.log("userId is ", userId)
             try {
                 const response = await axios.get(
-                   `http://localhost:3066/api/auth/profil/${userId}`,{
+                   `http://localhost:3066/api/auth/profil/${userId}`,
+                   {
                        headers: {
                            'authorization': token
                        }
