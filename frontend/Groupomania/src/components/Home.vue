@@ -7,11 +7,12 @@
         <div class="content__message">
             <div class="message">
                 <h5>nom de la personne</h5>
-                <p class="message__text">Superatis Tauri montis verticibus qui ad solis ortum sublimius attolluntur, Cilicia spatiis porrigitur late distentis dives bonis omnibus terra, eiusque lateri dextro adnexa Isauria, pari sorte uberi palmite viget et frugibus minutis, quam mediam navigabile flumen Calycadnus interscindit.<br /><br />Sed quid est quod in hac causa maxime homines admirentur et reprehendant meum consilium, cum ego idem antea multa decreverim, que magis ad hominis dignitatem quam ad rei publicae necessitatem pertinerent? Supplicationem quindecim dierum decrevi sententia mea. Rei publicae satis erat tot dierum quot C. Mario ; dis immortalibus non erat exigua eadem gratulatio quae ex maximis bellis. Ergo ille cumulus dierum hominis est dignitati tributus.<br /><br />Cum autem commodis intervallata temporibus convivia longa et noxia coeperint apparari vel distributio sollemnium sportularum, anxia deliberatione tractatur an exceptis his quibus vicissitudo debetur, peregrinum invitari conveniet, et si digesto plene consilio id placuerit fieri, is adhibetur qui pro domibus excubat aurigarum aut artem tesserariam profitetur aut secretiora quaedam se nosse confingit.</p>
+                <p class="message__text">{{ message.content }}</p>
+                <img v-if="message.picture" :src="message.picture" alt="illustration" class="picture" />
             </div>
             <div class="message__option">
-                <button class="message__option--like">j'aime</button>
-                <button class="message__option--dislike"> j'aime pas</button>
+                <button class="message__option--like">j'aime ({{ message.like }})</button>
+                <button class="message__option--dislike">j'aime pas ({{ message.dislike }})</button>
                 <button class="message__option--comment">commenter</button>
                 <div class="message__option__lastcomment">
                     <h5>Dernier commentaire : </h5>
@@ -26,16 +27,45 @@
 </template>
 
 <script>
+const axios = require("axios")
 export default {
-  methods: {
-      post() {
+    data() {
+        return {
+            messages: [],
+        };
+    },
+
+    methods: {
+        post() {
           addEventListener('click', (e) => {
               e.preventDefault()
               window.location.href = "/Post"
           })
-      }
-  }
-}
+      },
+
+        async getMessages() {
+            const token = localStorage.getItem("token")
+            try {
+                const response = await axios.get(
+                   `http://localhost:3066/api/post`,
+                   {
+                       headers: {
+                           'authorization': token
+                       }
+                   }
+                );
+                this.messages = response.data;
+                console.log(this.messages)
+            } catch (error) {
+                console.log(error);
+            }
+        },
+    },
+
+    created() {
+        this.getMessages();
+    }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

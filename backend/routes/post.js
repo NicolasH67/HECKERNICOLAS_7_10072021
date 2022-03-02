@@ -8,11 +8,12 @@ const multer = require('../middleware/multer-config');
 
 // All routes for sauces
 router.post('/', auth, multer, message.create);
-router.get('/', auth, message.getAll);
-router.get('/:id', auth, message.getOne);
+router.get('/', auth, message.getAllMessage);
+router.get('/profil/:id', auth, message.AllMessageToUser);
+router.get('/:id', auth, message.findOneMessage);
 router.put('/:id', auth, multer, message.update)
 
-router.delete('/:id', auth, message.delete);
-router.post('/:id/like', auth, message.likeSauce);
+router.delete('/:id', auth, message.dropMessage);
+//router.post('/:id/like', auth, message.likeSauce);
 
 module.exports = router;

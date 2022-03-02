@@ -79,7 +79,7 @@ exports.login = async (req, res, next) => {
       if (user === null) {
           return res.status(404).send({ error: "Vous n'etes pas connecter" });
       } else {
-        console.log(req.body);
+        console.log(req.body.picture);
         const updateUser = await db.User.update(
           {
             name: req.body.name, 

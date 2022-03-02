@@ -1,7 +1,7 @@
 <template>
 
     <div class="content">
-        <form action="">
+        <form @submit.prevent="submit">
             <div class="content__message">
                     <label for="txt" class="txt--label">Votre Message : </label><br />
                     <textarea name="txt" id="txt" cols="100" rows="10"></textarea><br />
@@ -23,22 +23,28 @@ const axios = require('axios');
 export default {
   methods: {
     submit() {
+      const token = localStorage.getItem("token")
+      const userId = localStorage.getItem("userId")
       const content = document.getElementById('txt').value;
       const picture = document.getElementById('picture').value;
       this.submitted = true; 
-      axios.post("http://localhost:3066/api/post", { content: content, picture: picture })
+      axios.post(
+        `http://localhost:3066/api/post`, 
+        { 
+          idUSERS: userId, content: content, picture: picture
+        }, 
+        {
+          headers: {
+            'authorization': token
+          }
+        }
+      )
       .then(function (response) {
           console.log(response.status)
-          window.location.href="/"
+          window.location.href="/Home"
       })
       .catch(function(error) {
-        const errorCode = error.message.split("code ")[1]
-        let messageError = ""
-        switch (errorCode) {
-          case "400": messageError = "error";break
-        }
-        const sectionMessage = document.getElementById('message--error'); 
-        sectionMessage.textContent = messageError;
+        console.log(error)
       })
     }
   }
