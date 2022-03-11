@@ -11,9 +11,9 @@ router.post('/', auth, multer, message.create);
 router.get('/', auth, message.getAllMessage);
 router.get('/profil/:id', auth, message.AllMessageToUser);
 router.get('/:id', auth, message.findOneMessage);
-router.put('/:id', auth, multer, message.update)
+//router.put('/:id', auth, multer, message.update)
 
-router.delete('/:id', auth, message.dropMessage);
+//router.delete('/:id', auth, message.dropMessage);
 //router.post('/:id/like', auth, message.likeSauce);
 
 module.exports = router;

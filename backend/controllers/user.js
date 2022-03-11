@@ -72,6 +72,7 @@ exports.login = async (req, res, next) => {
   };
 
   exports.update = async (req, res, next) => {
+    console.log(req.files)
     try {
       const user = await db.User.findOne({
           where: { id: req.params.id } 
@@ -79,12 +80,13 @@ exports.login = async (req, res, next) => {
       if (user === null) {
           return res.status(404).send({ error: "Vous n'etes pas connecter" });
       } else {
-        console.log(req.body.picture);
+        console.log(`${req.protocol}://${req.get('host')}/images/${req.files}`)
         const updateUser = await db.User.update(
           {
             name: req.body.name, 
             lastname: req.body.lastname, 
             bio: req.body.bio,
+            picture: `${req.protocol}://${req.get('host')}/images/${req.files}`,
           },
           {
             where: {id: req.params.id}

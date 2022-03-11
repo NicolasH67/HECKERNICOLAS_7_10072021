@@ -56,12 +56,12 @@ export default {
             const lastName = document.getElementById('lastname').value;
             const picture = document.getElementById('picture').files;
             const bio = document.getElementById('bio').value;
-            console.log(name, lastName, picture, bio)
+            console.log(picture)
             this.submitted = true; 
             axios.put(
             `http://localhost:3066/api/auth/profil/${userId}`, 
             { 
-              name: name, lastname: lastName, picture: picture, bio: bio 
+              name: name, lastname: lastName, files: picture.files, bio: bio 
             }, 
             {
               headers: {
