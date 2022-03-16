@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const db = require('../models'); 
 const JWT = require('jsonwebtoken'); 
 const fs = require('fs'); 
+const multer = require('multer');
 
 exports.signup = async (req, res, next) => {
     try {
@@ -72,7 +73,7 @@ exports.login = async (req, res, next) => {
   };
 
   exports.update = async (req, res, next) => {
-    console.log(req.files)
+    console.log(req.file.filename)
     try {
       const user = await db.User.findOne({
           where: { id: req.params.id } 
@@ -80,13 +81,13 @@ exports.login = async (req, res, next) => {
       if (user === null) {
           return res.status(404).send({ error: "Vous n'etes pas connecter" });
       } else {
-        console.log(`${req.protocol}://${req.get('host')}/images/${req.files}`)
+        console.log(`${req.protocol}://${req.get('host')}/images/${req.file.filename}`)
         const updateUser = await db.User.update(
           {
             name: req.body.name, 
             lastname: req.body.lastname, 
             bio: req.body.bio,
-            picture: `${req.protocol}://${req.get('host')}/images/${req.files}`,
+            picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
           },
           {
             where: {id: req.params.id}
