@@ -95,9 +95,9 @@ export default {
         const bio = document.getElementById('bio').value;
         const picture = this.file;
         console.log(picture)
-
-        let formData = new FormData();
-        formData.append('picture', picture, picture.name);
+        
+        const formData = new FormData();
+        formData.append('picture', picture);
         formData.append('lastname', lastName);
         formData.append('name', name);
         formData.append('bio', bio);
