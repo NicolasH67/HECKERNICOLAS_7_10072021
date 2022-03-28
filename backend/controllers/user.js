@@ -64,6 +64,7 @@ exports.login = async (req, res, next) => {
     })
     .then((User) => {
       res.status(200).json(User)
+      console.log(User)
     })
     .catch((error) => {
       res.status(404).json({
@@ -73,7 +74,6 @@ exports.login = async (req, res, next) => {
   };
 
   exports.update = async (req, res, next) => {
-    console.log(req.file.filename)
     try {
       const user = await db.User.findOne({
           where: { id: req.params.id } 
@@ -81,25 +81,56 @@ exports.login = async (req, res, next) => {
       if (user === null) {
           return res.status(404).send({ error: "Vous n'etes pas connecter" });
       } else {
-        console.log(`${req.protocol}://${req.get('host')}/images/${req.file.filename}`)
-        const updateUser = await db.User.update(
-          {
-            name: req.body.name, 
-            lastname: req.body.lastname, 
-            bio: req.body.bio,
-            picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-          },
-          {
-            where: {id: req.params.id}
-          })
-          .then(function(User) {
-            return res.status(200).json(User)
-          })
-          .catch(function(error) {
-            console.log(error);
-            return res.status(400).send({ error });
-          })
-        }
+        console.log(req.file)
+        if (req.file === undefined || null) {
+          const updateUser = await db.User.update(
+            {
+              name: req.body.name, 
+              lastname: req.body.lastname, 
+              bio: req.body.bio,
+            },
+            {
+              where: {id: req.params.id}
+            })
+            .then(function(User) {
+              return res.status(200).json(User)
+            })
+            .catch(function(error) {
+              console.log(error);
+              return res.status(400).send({ error });
+            })
+        } else {
+          if (user.picture === "http://localhost:3066/images/icone-default.jpeg" ) {
+            console.log('ne pas delete')
+          } else {
+            db.User.findOne({
+              id: req.params.id,
+            })
+            .then(user => {
+              const filename = user.picture.split('/images/')[1]; 
+              fs.unlink(`images/${filename}`, ()=> {
+                const updateUser = db.User.update(
+                  {
+                    name: req.body.name, 
+                    lastname: req.body.lastname, 
+                    bio: req.body.bio,
+                    picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                  },
+                  {
+                    where: {id: req.params.id}
+                  })
+                  .then(function(User) {
+                    return res.status(200).json(User)
+                  })
+                  .catch(function(error) {
+                    console.log(error);
+                    return res.status(400).send({ error });
+                  })
+              })
+            })
+          }
+        } 
+      }
     } catch (error) {
       console.log(error)
       return res.status(400).send({ error });
