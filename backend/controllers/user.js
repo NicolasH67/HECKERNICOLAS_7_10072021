@@ -42,7 +42,7 @@ exports.login = async (req, res, next) => {
         if (!hash) {
           return res.status(401).send({ error: "Mot de passe incorrect !" });
         } else {
-          console.log(user.id)
+          console.log(user)
           return res.status(200).send({
             userId: user.id,
             token: JWT.sign(
@@ -58,20 +58,18 @@ exports.login = async (req, res, next) => {
     }
   }
 
-  exports.findOneUser = (req, res, next) => {
-    db.User.findOne({
-      id: req.params.id,
-    })
-    .then((User) => {
-      res.status(200).json(User)
-      console.log(User)
-    })
-    .catch((error) => {
-      res.status(404).json({
-        error: error, 
-      })
-    })
-  };
+exports.findOneUser = async (req, res, next) => {
+  const userId = req.params.id;
+  const User = await db.User.findOne({ where: { id: userId } })
+  .then((User) => {
+    console.log(userId ,User)
+    res.status(200).json(User)
+  })
+  .catch((error) => {
+    console.log( error )
+    res.status(404).json({ error })
+  })
+}
 
   exports.update = async (req, res, next) => {
     try {
@@ -101,7 +99,23 @@ exports.login = async (req, res, next) => {
             })
         } else {
           if (user.picture === "http://localhost:3066/images/icone-default.jpeg" ) {
-            console.log('ne pas delete')
+            const updateUser = db.User.update(
+              {
+                name: req.body.name, 
+                lastname: req.body.lastname, 
+                bio: req.body.bio,
+                picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+              },
+              {
+                where: {id: req.params.id}
+              })
+              .then(function(User) {
+                return res.status(200).json(User)
+              })
+              .catch(function(error) {
+                console.log(error);
+                return res.status(400).send({ error });
+              })
           } else {
             db.User.findOne({
               id: req.params.id,

@@ -72,7 +72,7 @@ export default {
             console.log("userId is ", userId)
             try {
                 const response = await axios.get(
-                    `http://localhost:3066/api/auth/profil/:${userId}`,
+                    `http://localhost:3066/api/auth/profil/${userId}`,
                     {
                         headers: {
                             'authorization': token
@@ -80,8 +80,9 @@ export default {
                     }
                 );
                 this.user = response.data;
-                console.log(this.user.userId)
+                console.log(this.user)
             } catch (error) {
+                console.log("ici")
                 console.log(error);
             }
         },
