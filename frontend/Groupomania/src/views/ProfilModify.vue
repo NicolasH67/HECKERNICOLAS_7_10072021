@@ -1,6 +1,9 @@
 <template>
   <div class="profil">
       <nav class="profil__nav">
+        <button id="logout" @click="logout()">
+          Déconnexion
+        </button>
         <img alt="Logo Groupomania" src="../assets/icon.png" class="profil__nav__img">
         <router-link to="/Home" class="profil__nav__link">Accueil</router-link>
         <router-link to="/Profil" class="profil__nav__link">Votre Profil</router-link>
@@ -16,11 +19,24 @@ export default {
   name: 'About',
   components: {
     ProfilModify
+  }, 
+  methods: {
+    logout() {
+      addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        window.location.href = "/"
+      })
+    },
   }
 }
 </script>
 
 <style scoped lang="scss">
+#logout {
+  margin: 20px;
+
+}
 .profil {
     display: flex;
     &__nav {

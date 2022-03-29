@@ -1,6 +1,9 @@
 <template>
   <div class="home">
       <nav class="home__nav">
+        <button id="logout" @click="logout()">
+          Déconnexion
+        </button>
         <img alt="Logo Groupomania" src="../assets/icon.png" class="home__nav__img">
         <router-link to="/Home" class="home__nav__link active">Accueil</router-link>
         <router-link to="/Profil" class="home__nav__link">Votre Profil</router-link>
@@ -17,11 +20,24 @@ export default {
   name: 'About',
   components: {
     Home
+  }, 
+  methods: {
+    logout() {
+      addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        window.location.href = "/"
+      })
+    },
   }
 }
 </script>
 
 <style scoped lang="scss">
+#logout {
+  margin: 20px;
+
+}
 .home {
     display: flex;
     &__nav {
