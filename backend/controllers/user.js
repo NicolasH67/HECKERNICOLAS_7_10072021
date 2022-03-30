@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const db = require('../models'); 
 const JWT = require('jsonwebtoken'); 
 const fs = require('fs'); 
-const multer = require('multer');
 
 exports.signup = async (req, res, next) => {
     try {
@@ -22,7 +21,7 @@ exports.signup = async (req, res, next) => {
                 password: hash, 
                 isAdmin: false, 
             });
-            return res.status(201).send({ error: "utilisateur créer" });
+            return res.status(201).send({ message: "utilisateur créer" });
         }
     } catch (error) {
         res.statuts(400).send({ error: "email déjà utilisé" })
@@ -157,24 +156,26 @@ exports.findOneUser = async (req, res, next) => {
         where: {id: req.params.id}
       });
       if (user === null) {
-        console.log("this")
+        console.log(error)
         return res.status(404).send({ error })
       } else {
         if (user.picture === "http://localhost:3066/images/icone-default.jpeg") {
-          const deleteUser = db.User.delete(
+            db.User.destroy(
             {
               where: {id: req.params.id}
             })
             .then(function() {
+              console.log('user is delete')
               return res.status(200).json("user is delete")
             })
             .catch(function(error) {
+              console.log(error)
               return res.status(400).send({ error })
             })
         } else {
           const filename = user.picture.split('/images/')[1]; 
           fs.unlink(`images/${filename}`, () => {
-          const deleteUser = db.User.findOneAndDelete(
+            db.User.destroy(
             {
               where: {id: req.params.id}
             })
