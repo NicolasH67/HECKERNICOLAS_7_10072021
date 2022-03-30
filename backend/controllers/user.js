@@ -150,3 +150,44 @@ exports.findOneUser = async (req, res, next) => {
       return res.status(400).send({ error });
     }
   }
+
+  exports.delete = async (req, res, next) => {
+    try {
+      const user = await db.User.findOne({
+        where: {id: req.params.id}
+      });
+      if (user === null) {
+        console.log("this")
+        return res.status(404).send({ error })
+      } else {
+        if (user.picture === "http://localhost:3066/images/icone-default.jpeg") {
+          const deleteUser = db.User.delete(
+            {
+              where: {id: req.params.id}
+            })
+            .then(function() {
+              return res.status(200).json("user is delete")
+            })
+            .catch(function(error) {
+              return res.status(400).send({ error })
+            })
+        } else {
+          const filename = user.picture.split('/images/')[1]; 
+          fs.unlink(`images/${filename}`, () => {
+          const deleteUser = db.User.findOneAndDelete(
+            {
+              where: {id: req.params.id}
+            })
+            .then(function() {
+              return res.status(200).json("user is delete")
+            })
+            .catch(function(error) {
+              return res.status(400).send({ error })
+            })
+          })
+        }
+      }
+    } catch (error) {
+      
+    }
+  }

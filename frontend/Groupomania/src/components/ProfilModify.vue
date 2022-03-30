@@ -15,25 +15,22 @@
           type="text"
           name="lastname"
           id="lastname"
-          :value="user.lastname"
-        /><br /><br />
-        <label for="picture" class="label"
-          >Votre Photo de Profil : <br />
+          :value="user.lastname"/>
+          <br /><br />
+        <label for="picture" class="label">Votre Photo de Profil : <br />
           <img
             v-if="user.picture"
             :src="user.picture"
             alt="Photo de profil"
-            class="picture"
-          /> </label
-        ><br />
+            class="picture"/>
+        </label><br />
         <input
           type="file"
           id="file"
           name="file"
           ref="file"
           v-on:change="handleFileUpload()"
-          accept="image/png, image/jpeg, image/jpg"
-        />
+          accept="image/png, image/jpeg, image/jpg"/>
         <br /><br />
         <label for="bio" class="label">Votre Bio : </label><br />
         <textarea
@@ -42,13 +39,15 @@
           class="txt"
           cols="50"
           rows="5"
-          :value="user.bio"
-        ></textarea
-        ><br />
-        <button class="btn">Modifier</button
-        ><button class="btn">Supprimer le Profil</button>
+          :value="user.bio">
+        </textarea><br />
+        <button class="btn modifyBtn">Modifier</button>
       </div>
     </form>
+    <br />
+    <button class="btn deleteBtn" @click="deleteUser()">
+      Supprimer le Profil
+    </button>
   </div>
 </template>
 
@@ -120,6 +119,32 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    }, 
+
+    deleteUser() {
+      addEventListener('click', (e) => {
+        e.preventDefault();
+        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
+        try {
+          axios
+            .delete(`http://localhost:3066/api/auth/profil/${userId}`, {
+              headers: {
+                authorization: token
+              }
+            })
+            .then(function(response) {
+              console.log(response.status);
+              localStorage.clear();
+              window.location.href = "/"
+            })
+            .catch(function(error) {
+              console.log(error)
+            })
+        } catch (error) {
+          console.log(error)
+        }
+      })
     }
   },
 
