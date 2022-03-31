@@ -2,17 +2,18 @@ const bcrypt = require('bcrypt');
 const db = require('../models'); 
 const JWT = require('jsonwebtoken'); 
 const fs = require('fs'); 
+const User = db.User;
 
 exports.signup = async (req, res, next) => {
     try {
-        const user = await db.User.findOne({
+        const user = await User.findOne({
             where: { email: req.body.email } 
         }); 
         if (user !== null) {
             return res.status(400).send({ error: "email déjà utiliser" });
         } else {
             const hash = await bcrypt.hash(req.body.password, 10); 
-            const newUser = await db.User.create({
+            const newUser = await User.create({
                 email: req.body.email, 
                 name: req.body.name, 
                 lastname: req.body.lastname, 
@@ -31,7 +32,7 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-      const user = await db.User.findOne({
+      const user = await User.findOne({
         where: { email: req.body.email },
       });
       if (user === null) {
@@ -59,7 +60,7 @@ exports.login = async (req, res, next) => {
 
 exports.findOneUser = async (req, res, next) => {
   const userId = req.params.id;
-  const User = await db.User.findOne({ where: { id: userId } })
+  const User = await User.findOne({ where: { id: userId } })
   .then((User) => {
     console.log(userId ,User)
     res.status(200).json(User)
@@ -72,7 +73,7 @@ exports.findOneUser = async (req, res, next) => {
 
   exports.update = async (req, res, next) => {
     try {
-      const user = await db.User.findOne({
+      const user = await User.findOne({
           where: { id: req.params.id } 
       }); 
       if (user === null) {
@@ -80,7 +81,7 @@ exports.findOneUser = async (req, res, next) => {
       } else {
         console.log(req.file)
         if (req.file === undefined || null) {
-          const updateUser = await db.User.update(
+          const updateUser = await User.update(
             {
               name: req.body.name, 
               lastname: req.body.lastname, 
@@ -98,7 +99,7 @@ exports.findOneUser = async (req, res, next) => {
             })
         } else {
           if (user.picture === "http://localhost:3066/images/icone-default.jpeg" ) {
-            const updateUser = db.User.update(
+            const updateUser = User.update(
               {
                 name: req.body.name, 
                 lastname: req.body.lastname, 
@@ -116,13 +117,13 @@ exports.findOneUser = async (req, res, next) => {
                 return res.status(400).send({ error });
               })
           } else {
-            db.User.findOne({
+            User.findOne({
               id: req.params.id,
             })
             .then(user => {
               const filename = user.picture.split('/images/')[1]; 
               fs.unlink(`images/${filename}`, ()=> {
-                const updateUser = db.User.update(
+                const updateUser = User.update(
                   {
                     name: req.body.name, 
                     lastname: req.body.lastname, 
@@ -152,7 +153,7 @@ exports.findOneUser = async (req, res, next) => {
 
   exports.delete = async (req, res, next) => {
     try {
-      const user = await db.User.findOne({
+      const user = await User.findOne({
         where: {id: req.params.id}
       });
       if (user === null) {
@@ -160,7 +161,7 @@ exports.findOneUser = async (req, res, next) => {
         return res.status(404).send({ error })
       } else {
         if (user.picture === "http://localhost:3066/images/icone-default.jpeg") {
-            db.User.destroy(
+            User.destroy(
             {
               where: {id: req.params.id}
             })
@@ -175,7 +176,7 @@ exports.findOneUser = async (req, res, next) => {
         } else {
           const filename = user.picture.split('/images/')[1]; 
           fs.unlink(`images/${filename}`, () => {
-            db.User.destroy(
+            User.destroy(
             {
               where: {id: req.params.id}
             })
