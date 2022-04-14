@@ -10,11 +10,7 @@ module.exports = {
       },
       idUSERS: {
         allowNull: true,
-        type: Sequelize.INTEGER, 
-        references: {
-          model: 'Users', 
-          key: 'id'
-        }
+        type: Sequelize.INTEGER
       },
       content: {
         allowNull: false,
