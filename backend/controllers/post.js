@@ -4,7 +4,7 @@ const Message = db.Message
 exports.create = async (req, res, next) => {
     if (req.file === undefined || null) {
         const newMessage = await Message.create({
-            idUSERS: req.body.idUSERS,
+            UserId: req.body.idUSERS,
             content: req.body.content, 
             picture: null, 
             like: 0, 

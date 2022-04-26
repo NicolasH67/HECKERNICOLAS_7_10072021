@@ -4,7 +4,7 @@
         <div class="content__message">
             <div class="message">
                 <h5>nom de la personne</h5>
-                <p class="message__text">ezarzer</p>
+                <p class="message__text">{{ message.content }}</p>
             </div>
             <div class="message__option">
                 <button class="message__option--like">j'aime (0)</button>
