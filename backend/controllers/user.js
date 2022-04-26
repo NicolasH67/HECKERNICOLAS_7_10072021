@@ -59,7 +59,7 @@ exports.login = async (req, res, next) => {
 
 exports.findOneUser = async (req, res, next) => {
   const userId = req.params.id;
-  const User = await db.User.findOne({ where: { id: userId } })
+  await db.User.findOne({ where: { id: userId } })
   .then((User) => {
     console.log(userId ,User)
     res.status(200).json(User)

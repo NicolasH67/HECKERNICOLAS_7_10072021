@@ -1,5 +1,4 @@
 const db = require('../models'); 
-//const User = db.User
 const Message = db.Message
 
 exports.create = async (req, res, next) => {
@@ -37,3 +36,29 @@ exports.create = async (req, res, next) => {
         });
     }
 };
+
+exports.getAllMessages = async (req, res, next) => {
+    await Message.findAll()
+    .then((Message) => {
+      console.log(Message)
+      res.status(200).json(Message)
+    })
+    .catch((error) => {
+      console.log( error )
+      res.status(404).json({ error })
+    })
+}
+
+exports.findOneMessage = async (req, res, next) => {
+    const idMessage = req.params.id;
+    console.log(idMessage)
+    await db.Message.findOne({ where: { id: idMessage } })
+    .then((Message) => {
+      console.log(Message)
+      res.status(200).json(Message)
+    })
+    .catch((error) => {
+      console.log( error )
+      res.status(404).json({ error })
+    })
+  }

@@ -1,9 +1,6 @@
 <template>
 
     <div class="content">
-        <button class="btn" id="btn" @click="post">
-            créer une publication
-        </button>
         <div class="content__message">
             <div class="message">
                 <h5>nom de la personne</h5>
@@ -31,6 +28,7 @@ export default {
     data() {
         return {
             messages: [],
+            id:'',
         };
     },
 
@@ -44,9 +42,11 @@ export default {
 
         async getMessages() {
             const token = localStorage.getItem("token")
+            const idMessage = this.id;
+            console.log(this.id)
             try {
                 const response = await axios.get(
-                   `http://localhost:3066/api/post`,
+                   `http://localhost:3066/api/post/${idMessage}`,
                    {
                        headers: {
                            'authorization': token
@@ -62,6 +62,7 @@ export default {
     },
 
     created() {
+        this.id = this.$route.params.id;
         this.getMessages();
     }
 };

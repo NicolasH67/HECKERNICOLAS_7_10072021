@@ -6,6 +6,7 @@ import Home from '../views/Home.vue'
 import Profil from '../views/Profil.vue'
 import Post from '../views/Post.vue'
 import ProfilModify from '../views/ProfilModify.vue'
+import Message from '../views/Message.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const routes = [
     path: '/Post',
     name: 'Post',
     component: Post
+  },
+  {
+    path: '/Message/:id',
+    name: 'Message',
+    component: Message
   },
   {
     path: '/ProfilModify',
