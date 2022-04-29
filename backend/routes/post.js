@@ -10,5 +10,6 @@ const multer = require('../middleware/multer-config');
 router.post('/', auth, multer, message.create);
 router.get('/', auth, multer, message.getAllMessages);
 router.get('/:id', auth, multer, message.findOneMessage);
+router.get('/profil/:id', auth, multer, message.findToUser);
 
 module.exports = router;

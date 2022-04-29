@@ -18,22 +18,24 @@
                 créer une publication
             </button>
             <h2>Vos dernières publications</h2>
-            <div class="content__message">
-                <div class="message">
-                    <p class="message__text">{{ message.content }}</p>
-                    <img v-if="message.picture" :src="message.picture" alt="Illustration" class="picture" />
-                </div>
-                <div class="message__option">
-                    <button class="message__option--like">j'aime ({{ message.like }})</button>
-                    <button class="message__option--dislike"> j'aime pas ({{ message.dislike }})</button>
-                    <button class="message__option--comment">commenter</button>
-                    <div class="message__option__lastcomment">
-                        <h5>Dernier commentaire : </h5>
-                        <p></p>
-                        <p></p>
+            <div v-for="(item) in messages" :key="item.id" class="message">
+                <router-link :to="{ path: `/message/${item.id}`}" class="content__message">
+                    <div class="message--profil">
+                        <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
+                        <p class="message--profil__text">{{ item.content }}</p>
                     </div>
-                    <button class="message__option--modif">modifier la publication</button>
-                </div>
+                    <div class="message--profil__option">
+                        <button>modifier le message</button>
+                        <button class="message--profil__option--like">j'aime (0)</button>
+                        <button class="message--profil__option--dislike">j'aime pas (0)</button>
+                        <button class="message--profil__option--comment">commenter</button>
+                        <div class="message--profil__option__lastcomment">
+                            <h5>Dernier commentaire : </h5>
+                            <p>nom de la personne</p>
+                            <p>le commentaire : </p>
+                        </div>
+                    </div>
+                </router-link>
             </div>
         </div>
 
@@ -47,7 +49,7 @@ export default {
     data() {
         return {
             user: [],
-            message: [],
+            messages: [],
         };
     },
 
@@ -107,8 +109,8 @@ export default {
     },
 
     created() {
-        this.getUser();
         this.getMessages();
+        this.getUser();
     }
 };
 </script>
@@ -145,19 +147,19 @@ export default {
     }
 }
 
-.message {
+.message--profil {
     border: 5px solid #F53008;
     width: 75%;
     text-align: justify;
     padding: 25px;
     border-radius: 15px 0 0 15px;
     &__option {
-        width: 20%;
+        width: 25%;
         border: 5px solid #F53008;
         border-radius: 0 15px 15px 0;
         &--like, &--dislike {
             width: 50%;
-            height: 10%;
+            height: 20%;
             &:hover {
                 background-color: #ffd6d8;
             }
@@ -176,6 +178,9 @@ export default {
             &:hover {
                 background-color: #ffd6d8;
             }
+        }
+        &__lastcomment {
+            padding-bottom: 50px;
         }
     }
 }

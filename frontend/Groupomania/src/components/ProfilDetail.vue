@@ -11,23 +11,24 @@
         </div>
         <div class="publication">
             <h2>Vos dernières publications</h2>
-            <div class="content__message">
-                <div class="message">
-                    <p class="message__text">{{ message.content }}</p>
-                    <img v-if="message.picture" :src="message.picture" alt="Illustration" class="picture" />
-                </div>
-                <div class="message__option">
-                    <button class="message__option--like">j'aime ({{ message.like }})</button>
-                    <button class="message__option--dislike"> j'aime pas ({{ message.dislike }})</button>
-                    <button class="message__option--comment">commenter</button>
-                    <div class="message__option__lastcomment">
-                        <h5>Dernier commentaire : </h5>
-                        <p></p>
-                        <p></p>
+            <div v-for="(item) in messages" :key="item.id">
+                <router-link :to="{ path: `/message/${item.id}`}" class="content__message">
+                    <div class="message">
+                        <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
+                        <p class="message__text">{{ item.content }}</p>
                     </div>
-                    <button class="message__option--modif">modifier la publication</button>
-                </div>
-            </div>
+                    <div class="message__option">
+                        <button class="message__option--like">j'aime (0)</button>
+                        <button class="message__option--dislike">j'aime pas (0)</button>
+                        <button class="message__option--comment">commenter</button>
+                        <div class="message__option__lastcomment">
+                            <h5>Dernier commentaire : </h5>
+                            <p>nom de la personne</p>
+                            <p>le commentaire : </p>
+                        </div>
+                    </div>
+                </router-link>
+            </div>  
         </div>
 
     </div>
@@ -40,7 +41,7 @@ export default {
     data() {
         return {
             user: [],
-            message: [],
+            messages: [],
             id: ''
         };
     },
@@ -81,7 +82,7 @@ export default {
         },
 
     async getMessages() {
-        const userId = localStorage.getItem("userId")
+        const userId = this.id
         const token = localStorage.getItem("token")
         try {
             const response = await axios.get(
@@ -102,8 +103,8 @@ export default {
 
     created() {
         this.id = this.$route.params.id;
-        this.getUser();
         this.getMessages();
+        this.getUser();
     }
 };
 </script>

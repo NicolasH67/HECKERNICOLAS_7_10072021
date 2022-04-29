@@ -6,7 +6,7 @@
         </button>
         <img alt="Logo Groupomania" src="../assets/icon.png" class="profil__nav__img">
         <router-link to="/Home" class="profil__nav__link">Accueil</router-link>
-        <router-link to="/Profil" class="profil__nav__link active">Votre Profil</router-link>
+        <router-link to="/Profil" class="profil__nav__link">Votre Profil</router-link>
       </nav>
     <Message/>
   </div>

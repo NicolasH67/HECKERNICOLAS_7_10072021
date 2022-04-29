@@ -61,4 +61,18 @@ exports.findOneMessage = async (req, res, next) => {
       console.log( error )
       res.status(404).json({ error })
     })
-  }
+}
+
+exports.findToUser = async (req, res, next) => {
+    const UserId = req.params.id;
+    console.log(UserId)
+    await db.Message.findAll({ where: { UserId: UserId } })
+    .then((Message) => {
+      console.log(Message)
+      res.status(200).json(Message)
+    })
+    .catch((error) => {
+      console.log( error )
+      res.status(404).json({ error })
+    })
+}
