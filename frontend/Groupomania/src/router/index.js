@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Signup from '../views/Signup.vue'
 import Home from '../views/Home.vue'
 import Profil from '../views/Profil.vue'
+import ProfilDetail from '../views/ProfilDetail.vue'
 import Post from '../views/Post.vue'
 import ProfilModify from '../views/ProfilModify.vue'
 import Message from '../views/Message.vue'
@@ -30,6 +31,11 @@ const routes = [
     path: '/Profil',
     name: 'Profil',
     component: Profil
+  },
+  {
+    path: '/Profil/:id',
+    name: 'ProfilDetail',
+    component: ProfilDetail
   },
   {
     path: '/Post',
