@@ -3,12 +3,12 @@
     <div class="content">
         <div class="content__message">
             <div class="message">
-                <h5>nom de la personne</h5>
+                <h5><router-link :to="{ path: `/profil/${user.id}`}"><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></router-link></h5>
                 <p class="message__text">{{ message.content }}</p>
             </div>
             <div class="message__option">
-                <button class="message__option--like">j'aime (0)</button>
-                <button class="message__option--dislike">j'aime pas (0)</button>
+                <button class="message__option--like">j'aime ({{ message.like}})</button>
+                <button class="message__option--dislike">j'aime pas ({{ message.dislike}})</button>
                 <button class="message__option--comment">commenter</button>
                 <div class="message__option__lastcomment">
                     <h5>Dernier commentaire : </h5>
@@ -27,8 +27,9 @@ const axios = require("axios")
 export default {
     data() {
         return {
-            messages: [],
-            id:'',
+            message: [],
+            user: [],
+            id: '',
         };
     },
 
@@ -39,6 +40,25 @@ export default {
               window.location.href = "/Post"
           })
       },
+
+      async getUser() {
+            const userId = this.message.UserId;
+            console.log(userId)
+            const token = localStorage.getItem("token")
+            try {
+                const response = await axios.get(
+                    `http://localhost:3066/api/auth/profil/${userId}`,
+                    {
+                        headers: {
+                            'authorization': token
+                        }   
+                    }
+                );
+                this.user = response.data;
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
         async getMessages() {
             const token = localStorage.getItem("token")
@@ -53,17 +73,20 @@ export default {
                        }
                    }
                 );
-                this.messages = response.data;
-                console.log(this.messages)
+                this.message = response.data;
+                console.log(this.message)
             } catch (error) {
                 console.log(error);
             }
         },
+
+        
     },
 
-    created() {
+    async created() {
         this.id = this.$route.params.id;
-        this.getMessages();
+        await this.getMessages();
+        this.getUser();
     }
 };
 </script>
@@ -119,5 +142,13 @@ export default {
             }
         }
     }
+}
+
+.name {
+    text-transform: uppercase;
+}
+
+.lastname {
+    text-transform: capitalize; 
 }
 </style>

@@ -4,10 +4,11 @@
         <button class="btn" id="btn" @click="post">
             créer une publication
         </button>
-        <div class="content__message">
+        <div v-for="(item) in messages" :key="item.id">
+            <router-link :to="{ path: `/message/${item.id}`}" class="content__message">
             <div class="message">
-                <h5>nom de la personne</h5>
-                <p class="message__text">ezarzer</p>
+                <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
+                <p class="message__text">{{ item.content }}</p>
             </div>
             <div class="message__option">
                 <button class="message__option--like">j'aime (0)</button>
@@ -19,6 +20,7 @@
                     <p>le commentaire : </p>
                 </div>
             </div>
+            </router-link>
         </div>
       
     </div>
@@ -31,6 +33,7 @@ export default {
     data() {
         return {
             messages: [],
+            user: [],
         };
     },
 
@@ -59,10 +62,30 @@ export default {
                 console.log(error);
             }
         },
+
+        async getUsers() {
+            const userId = localStorage.getItem("userId")
+            const token = localStorage.getItem("token")
+            console.log("userId is ", userId)
+            try {
+                const response = await axios.get(
+                    `http://localhost:3066/api/auth/profil/${userId}`,
+                    {
+                        headers: {
+                            'authorization': token
+                        }   
+                    }
+                );
+                this.user = response.data;
+                console.log(this.user)
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
 
-    created() {
-        this.getMessages();
+    async created() {
+        await this.getMessages();
     }
 };
 </script>

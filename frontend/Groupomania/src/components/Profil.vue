@@ -82,7 +82,6 @@ export default {
                 this.user = response.data;
                 console.log(this.user)
             } catch (error) {
-                console.log("ici")
                 console.log(error);
             }
         },

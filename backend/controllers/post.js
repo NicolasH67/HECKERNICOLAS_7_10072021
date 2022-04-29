@@ -38,14 +38,14 @@ exports.create = async (req, res, next) => {
 };
 
 exports.getAllMessages = async (req, res, next) => {
-    await Message.findAll()
+    await Message.findAll({ order: [['updatedAt', 'DESC']]})
     .then((Message) => {
-      console.log(Message)
-      res.status(200).json(Message)
+        console.log(Message)
+        res.status(200).json(Message)
     })
     .catch((error) => {
-      console.log( error )
-      res.status(404).json({ error })
+        console.log( error )
+        res.status(404).json({ error })
     })
 }
 
