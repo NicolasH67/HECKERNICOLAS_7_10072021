@@ -20,7 +20,7 @@ exports.create = async (req, res, next) => {
         });
     } else {
         const newMessage = await Message.create({
-            idUSERS: req.body.idUSERS,
+            UserId: req.body.idUSERS,
             content: req.body.content, 
             picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`, 
             like: 0, 
@@ -66,7 +66,7 @@ exports.findOneMessage = async (req, res, next) => {
 exports.findToUser = async (req, res, next) => {
     const UserId = req.params.id;
     console.log(UserId)
-    await db.Message.findAll({ where: { UserId: UserId } })
+    await db.Message.findAll({ where: { UserId: UserId }, order: [['updatedAt', 'DESC']] })
     .then((Message) => {
       console.log(Message)
       res.status(200).json(Message)

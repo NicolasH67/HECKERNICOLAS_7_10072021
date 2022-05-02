@@ -1,23 +1,30 @@
 <template>
 
     <div class="content">
+        
         <div class="content__message">
             <div class="message">
                 <h5><router-link :to="{ path: `/profil/${user.id}`}"><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></router-link></h5>
                 <p class="message__text">{{ message.content }}</p>
+                <img v-if="message.picture" :src="message.picture" alt="ilustration" class="picture" />
             </div>
             <div class="message__option">
                 <button class="message__option--like">j'aime ({{ message.like}})</button>
                 <button class="message__option--dislike">j'aime pas ({{ message.dislike}})</button>
-                <button class="message__option--comment">commenter</button>
-                <div class="message__option__lastcomment">
-                    <h5>Dernier commentaire : </h5>
-                    <p>nom de la personne</p>
-                    <p>le commentaire : </p>
-                </div>
             </div>
         </div>
-      
+
+        <div class="form">
+            <br />
+            <textarea name="commentaire" id="commentaire" cols="100" rows="1"></textarea><button>publiez</button>
+        </div>
+
+        <div>
+            <div class="commentaires">
+                <h5><router-link :to="{ path: `/profil/${user.id}`}"><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></router-link></h5>
+                <p class="commentaires__text">{{ message.content }}</p>
+            </div>
+        </div>
     </div>
 
 </template>
@@ -29,6 +36,7 @@ export default {
         return {
             message: [],
             user: [],
+            comments: [],
             id: '',
         };
     },
@@ -150,5 +158,17 @@ export default {
 
 .lastname {
     text-transform: capitalize; 
+}
+.picture {
+    height: 300px;
+}
+
+.commentaires {
+    margin-top: 20px;
+    border: 5px solid #F53008;
+    width: 90%;
+    text-align: justify;
+    padding: 15px;
+    border-radius: 15px;
 }
 </style>

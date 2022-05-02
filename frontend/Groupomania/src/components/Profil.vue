@@ -5,7 +5,6 @@
             <button class="btn" id="ProfilBtn" @click="profil">
                 Modifier mon profil
             </button>
-
             <h2>Votre profil : </h2>
             <p>Bonjour, <span class="name">{{ user.name }}</span>, <span class="lastname">{{ user.lastname }}</span><br /></p>
                 <img v-if="user.picture" :src="user.picture" alt="Photo de profil" class="picture" />
@@ -18,24 +17,22 @@
                 créer une publication
             </button>
             <h2>Vos dernières publications</h2>
-            <div v-for="(item) in messages" :key="item.id" class="message">
-                <router-link :to="{ path: `/message/${item.id}`}" class="content__message">
-                    <div class="message--profil">
-                        <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
-                        <p class="message--profil__text">{{ item.content }}</p>
+            <div v-for="(item) in messages" :key="item.id" class="content__message">
+                <div class="message" @click="windowHref(item.id)">
+                    <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
+                    <p class="message__text">{{ item.content }}</p>
+                    <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture--message" />
+                </div>
+                <div class="message__option">
+                    <button class="message__option--like">j'aime (0)</button>
+                    <button class="message__option--dislike">j'aime pas (0)</button>
+                    <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
+                    <div class="message__option__lastcomment">
+                        <h5>Dernier commentaire : </h5>
+                        <p>nom de la personne</p>
+                        <p>le commentaire : </p>
                     </div>
-                    <div class="message--profil__option">
-                        <button>modifier le message</button>
-                        <button class="message--profil__option--like">j'aime (0)</button>
-                        <button class="message--profil__option--dislike">j'aime pas (0)</button>
-                        <button class="message--profil__option--comment">commenter</button>
-                        <div class="message--profil__option__lastcomment">
-                            <h5>Dernier commentaire : </h5>
-                            <p>nom de la personne</p>
-                            <p>le commentaire : </p>
-                        </div>
-                    </div>
-                </router-link>
+                </div>
             </div>
         </div>
 
@@ -60,6 +57,14 @@ export default {
               window.location.href = "/Post"
           })
       },
+
+    windowHref(id) {
+        addEventListener('click', (e) => {
+            console.log(id)
+            e.preventDefault()
+            window.location.href = `/message/${id}`
+        })
+    },
 
       profil() {
             addEventListener('click', (e) => {
@@ -147,7 +152,7 @@ export default {
     }
 }
 
-.message--profil {
+.message {
     border: 5px solid #F53008;
     width: 75%;
     text-align: justify;
@@ -194,5 +199,8 @@ export default {
 .picture {
     width: 100px; 
     height: 100px;
+    &--message {
+        height: 300px;
+    }
 }
 </style>

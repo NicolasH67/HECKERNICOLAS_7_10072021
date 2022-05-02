@@ -10,25 +10,24 @@
 
         </div>
         <div class="publication">
-            <h2>Vos dernières publications</h2>
-            <div v-for="(item) in messages" :key="item.id">
-                <router-link :to="{ path: `/message/${item.id}`}" class="content__message">
-                    <div class="message">
-                        <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
-                        <p class="message__text">{{ item.content }}</p>
+            <h2>Dernières publications</h2>
+            <div v-for="(item) in messages" :key="item.id" class="content__message">
+                <div class="message" @click="windowHref(item.id)">
+                    <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
+                    <p class="message__text">{{ item.content }}</p>
+                    <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture--message" />
+                </div>
+                <div class="message__option">
+                    <button class="message__option--like">j'aime (0)</button>
+                    <button class="message__option--dislike">j'aime pas (0)</button>
+                    <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
+                    <div class="message__option__lastcomment">
+                        <h5>Dernier commentaire : </h5>
+                        <p>nom de la personne</p>
+                        <p>le commentaire : </p>
                     </div>
-                    <div class="message__option">
-                        <button class="message__option--like">j'aime (0)</button>
-                        <button class="message__option--dislike">j'aime pas (0)</button>
-                        <button class="message__option--comment">commenter</button>
-                        <div class="message__option__lastcomment">
-                            <h5>Dernier commentaire : </h5>
-                            <p>nom de la personne</p>
-                            <p>le commentaire : </p>
-                        </div>
-                    </div>
-                </router-link>
-            </div>  
+                </div>
+            </div>
         </div>
 
     </div>
@@ -53,6 +52,14 @@ export default {
               window.location.href = "/Post"
           })
       },
+      
+      windowHref(id) {
+        addEventListener('click', (e) => {
+            console.log(id)
+            e.preventDefault()
+            window.location.href = `/message/${id}`
+        })
+    },
 
       profil() {
             addEventListener('click', (e) => {
@@ -182,8 +189,12 @@ export default {
 .lastname {
     text-transform: capitalize; 
 }
+
 .picture {
     width: 100px; 
     height: 100px;
+    &--message {
+        height: 300px;
+    }
 }
 </style>
