@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       UserId: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER
       },
       MessageId: {

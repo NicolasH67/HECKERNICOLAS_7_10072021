@@ -14,15 +14,15 @@
             </div>
         </div>
 
-        <div class="form">
+        <form class="form" @submit.prevent="postComments">
             <br />
-            <textarea name="commentaire" id="commentaire" cols="100" rows="1"></textarea><button>publiez</button>
-        </div>
+            <textarea name="commentaire" id="comment" cols="100" rows="1"></textarea><button>publiez</button>
+        </form>
 
-        <div>
-            <div class="commentaires">
-                <h5><router-link :to="{ path: `/profil/${user.id}`}"><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></router-link></h5>
-                <p class="commentaires__text">{{ message.content }}</p>
+        <div v-for="(item) in comments" :key="item.id">
+            <div class="comment">
+                <h5><span class="name">nom <span class="lastname">prenom</span></span></h5>
+                <p class="message__text">{{ item.content }}</p>
             </div>
         </div>
     </div>
@@ -47,6 +47,36 @@ export default {
               e.preventDefault()
               window.location.href = "/Post"
           })
+      },
+      
+      async postComments() {
+          const messageId = this.id;
+          const userId = localStorage.getItem('userId');
+          const token = localStorage.getItem('token');
+            try {
+                const content = document.getElementById('comment').value;
+
+                this.submitted = true;
+                axios.post(`http://localhost:3066/api/comment`, 
+                {
+                    UserId: userId, 
+                    MessageId: messageId, 
+                    content: content
+                }, {
+                    headers: {
+                        authorization: token
+                    }
+                })
+                .then(function(response) {
+                    console.log(response.status);
+                    window.location.href = `/message/${messageId}`;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+                } catch (error) {
+                    console.log(error);
+                } 
       },
 
       async getUser() {
@@ -88,6 +118,24 @@ export default {
             }
         },
 
+        async getComment() {
+            const token = localStorage.getItem("token")
+            const idMessage = this.id;
+            try {
+                const response = await axios.get(
+                   `http://localhost:3066/api/comment/${idMessage}`,
+                   {
+                       headers: {
+                           'authorization': token
+                       }
+                   }
+                );
+                this.comments = response.data;
+                console.log(this.comments)
+            } catch (error) {
+                console.log(error);
+            }
+        },
         
     },
 
@@ -95,6 +143,7 @@ export default {
         this.id = this.$route.params.id;
         await this.getMessages();
         this.getUser();
+        await this.getComment();
     }
 };
 </script>
@@ -163,7 +212,7 @@ export default {
     height: 300px;
 }
 
-.commentaires {
+.comment {
     margin-top: 20px;
     border: 5px solid #F53008;
     width: 90%;
