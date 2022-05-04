@@ -8,6 +8,7 @@
         <router-link to="/Admin" class="home__nav__link">Accueil</router-link>
         <router-link to="/Admin/User" class="home__nav__link active">Utilisateur</router-link>
         <router-link to="/Admin/Post" class="home__nav__link">Message</router-link>
+        <router-link to="/Home" class="home__nav__link">Revenir au site</router-link>
       </nav>
     <AdminUser/>
   </div>

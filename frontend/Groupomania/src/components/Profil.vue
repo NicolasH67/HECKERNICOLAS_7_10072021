@@ -24,7 +24,7 @@
                     <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture--message" />
                 </div>
                 <div class="message__option">
-                    <button class="message__option--modify" @click="postModify(item.id)">Modifier la Publication</button>
+                    <button class="message__option--modify" @click="postModify(item.id)">Modifier ou supprimer la Publication</button>
                     <button class="message__option--like">j'aime<br />(0)</button>
                     <button class="message__option--dislike">j'aime pas<br />(0)</button>
                     <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
