@@ -122,6 +122,7 @@ export default {
 }
 
 .message {
+    cursor: pointer;
     border: 5px solid #F53008;
     width: 75%;
     text-align: justify;
@@ -134,11 +135,13 @@ export default {
         &--like, &--dislike {
             width: 50%;
             height: 10%;
+            cursor: pointer;
             &:hover {
                 background-color: #ffd6d8;
             }
         }
         &--comment {
+            cursor: pointer;
             width: 100%;
             height: 10%;
             margin-top: 50px;

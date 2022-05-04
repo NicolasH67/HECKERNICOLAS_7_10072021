@@ -36,7 +36,7 @@ export default {
 <style scoped lang="scss">
 #logout {
   margin: 20px;
-
+  cursor: pointer;
 }
 .profil {
     display: flex;

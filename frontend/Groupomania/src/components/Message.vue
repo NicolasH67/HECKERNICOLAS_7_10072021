@@ -160,18 +160,6 @@ export default {
         display: flex;
     }
 }
-.btn {
-    width: 75%;
-    border-radius: 15px;
-    height: 50px;
-    background-color: #ffd6d8;
-    transform: scale(1);
-    transition-property: transform;
-    transition-duration: 500ms;
-    &:hover {
-      transform: scale(1.15);
-    }
-}
 
 .message {
     border: 5px solid #F53008;
@@ -185,7 +173,7 @@ export default {
         border-radius: 0 15px 15px 0;
         &--like, &--dislike {
             width: 50%;
-            height: 10%;
+            height: 50px;
             &:hover {
                 background-color: #ffd6d8;
             }

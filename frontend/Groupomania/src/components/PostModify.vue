@@ -11,7 +11,7 @@
                 cols="100"
                 rows="10">
               </textarea><br />
-              <label for="picture--option">Voulez-vous ajoutez une Image</label><br />
+              <label for="picture--option">Voulez-vous ajoutez ou modifier une Image</label><br />
               <input type="radio" name="picture--option" id="yes" value="Oui"><label for="yes">oui</label><br />
               <input type="radio" name="picture--option" id="No" value="Non" checked><label for="no">non</label><br />
               <input
@@ -21,7 +21,8 @@
                 ref="file"
                 v-on:change="handleFileUpload()"
                 accept="image/png, image/jpeg, image/jpg"/><br /> <br />
-              <button class="btn">Publier</button>
+              <button class="btn">Modifier</button><br />
+              <button class="btn delete">Supprimer</button>
             </div>
 
 
@@ -64,7 +65,6 @@ export default {
     },
 
     async postMessage() {
-      const userId = localStorage.getItem('userId');
       const token = localStorage.getItem('token');
       try {
         const content = document.getElementById('message').value; 
@@ -72,7 +72,6 @@ export default {
         console.log(picture)
 
         const formData = new FormData(); 
-        formData.append('idUSERS', userId); 
         formData.append('picture', picture); 
         formData.append('content', content); 
 
@@ -95,6 +94,10 @@ export default {
         console.log(error);
       } 
     }
+  }, 
+
+  async created() {
+      this.id = this.$route.params.id;
   }
 }
 </script>
@@ -132,5 +135,8 @@ export default {
     display: none;
     margin-right: auto;
     margin-left: auto;
+}
+.delete {
+    margin-top: 15px;
 }
 </style>

@@ -24,8 +24,9 @@
                     <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture--message" />
                 </div>
                 <div class="message__option">
-                    <button class="message__option--like">j'aime (0)</button>
-                    <button class="message__option--dislike">j'aime pas (0)</button>
+                    <button class="message__option--modify" @click="postModify(item.id)">Modifier la Publication</button>
+                    <button class="message__option--like">j'aime<br />(0)</button>
+                    <button class="message__option--dislike">j'aime pas<br />(0)</button>
                     <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
                     <div class="message__option__lastcomment">
                         <h5>Dernier commentaire : </h5>
@@ -52,11 +53,18 @@ export default {
 
     methods: {
         post() {
-          addEventListener('click', (e) => {
-              e.preventDefault()
-              window.location.href = "/Post"
-          })
-      },
+            addEventListener('click', (e) => {
+                e.preventDefault()
+                window.location.href = "/Post"
+            })
+        },
+        
+        postModify(id) {
+            addEventListener('click', (e) => {
+                e.preventDefault()
+                window.location.href = `/PostModify/${id}`
+            })
+        },
 
     windowHref(id) {
         addEventListener('click', (e) => {
@@ -140,6 +148,7 @@ export default {
     width: 30%;
 }
 .btn {
+    cursor: pointer;
     width: 75%;
     border-radius: 15px;
     height: 50px;
@@ -153,6 +162,7 @@ export default {
 }
 
 .message {
+    cursor: pointer;
     border: 5px solid #F53008;
     width: 75%;
     text-align: justify;
@@ -163,13 +173,18 @@ export default {
         border: 5px solid #F53008;
         border-radius: 0 15px 15px 0;
         &--like, &--dislike {
+            cursor: pointer;
             width: 50%;
             height: 20%;
             &:hover {
                 background-color: #ffd6d8;
             }
         }
+        &--modify {
+            margin-bottom: 15px;
+        }
         &--comment {
+            cursor: pointer;
             width: 100%;
             height: 10%;
             margin-top: 50px;

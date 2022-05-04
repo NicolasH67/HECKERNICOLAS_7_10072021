@@ -1,25 +1,26 @@
 <template>
-  <div class="profil">
-      <nav class="profil__nav">
+  <div class="home">
+      <nav class="home__nav">
         <button id="logout" @click="logout()">
           Déconnexion
         </button>
-        <img alt="Logo Groupomania" src="../assets/icon.png" class="profil__nav__img">
-        <router-link to="/Home" class="profil__nav__link">Accueil</router-link>
-        <router-link to="/Profil" class="profil__nav__link">Votre Profil</router-link>
+        <img alt="Logo Groupomania" src="../assets/icon.png" class="home__nav__img">
+        <router-link to="/Admin" class="home__nav__link">Accueil</router-link>
+        <router-link to="/Admin/User" class="home__nav__link">Utilisateur</router-link>
+        <router-link to="/Admin/Post" class="home__nav__link active">Message</router-link>
       </nav>
-    <Message/>
+    <AdminPost/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Message from '@/components/Message.vue'
+import AdminPost from '@/components/AdminPost.vue'
 
 export default {
   name: 'About',
   components: {
-    Message
+    AdminPost
   }, 
   methods: {
     logout() {
@@ -38,7 +39,7 @@ export default {
   margin: 20px;
   cursor: pointer;
 }
-.profil {
+.home {
     display: flex;
     &__nav {
         width: 200px;
@@ -52,7 +53,7 @@ export default {
         flex-direction: column;
         @media screen and (max-width: 768px) {
             flex-direction: row;
-            width: 100%;
+            width: 106%;
             margin-right: 0px;
             height: auto;
         }
@@ -74,9 +75,9 @@ export default {
             margin: 15px auto auto auto;
             &:hover {
                   font-weight: bold;
-                  border: 3px solid #F53008;
-                  border-radius: 10px;
-                  box-shadow: 0px 0px 15px #F53008;
+    border: 3px solid #F53008;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px #F53008;
             }
         }
     }

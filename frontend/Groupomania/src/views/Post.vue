@@ -35,7 +35,7 @@ export default {
 <style scoped lang="scss">
 #logout {
   margin: 20px;
-
+  cursor: pointer;
 }
 .home {
     display: flex;
