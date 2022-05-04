@@ -10,7 +10,7 @@
                 <img v-if="user.picture" :src="user.picture" alt="Photo de profil" class="picture" />
             <h3>Votre bio : </h3>
             <p id="bio">{{ user.bio }} <br /></p>
-
+            <button v-if="user.isAdmin === true" class="btn" @click="isAdmin">Page Admin</button>
         </div>
         <div class="publication">
             <button class="btn" id="btn" @click="post">
@@ -56,6 +56,13 @@ export default {
             addEventListener('click', (e) => {
                 e.preventDefault()
                 window.location.href = "/Post"
+            })
+        },
+        
+        isAdmin() {
+            addEventListener('click', (e) => {
+                e.preventDefault()
+                window.location.href = "/Admin"
             })
         },
         
