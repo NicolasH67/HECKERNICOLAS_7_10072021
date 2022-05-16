@@ -8,6 +8,7 @@ const path = require('path')
 const userRoutes = require('./routes/user'); 
 const postRoutes = require('./routes/post');
 const commentRoutes = require('./routes/Comments');
+const adminRoutes = require('./routes/admin')
 
 // Connexion à la DB 
 const { sequelize } = require('./models/index'); 
@@ -37,6 +38,7 @@ app.use(express.json());
 app.use('/api/auth', userRoutes); 
 app.use('/api/post', postRoutes); 
 app.use('/api/comment', commentRoutes); 
+app.use('/api/admin', adminRoutes); 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app; 

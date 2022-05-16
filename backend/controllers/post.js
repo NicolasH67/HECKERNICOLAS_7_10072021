@@ -1,5 +1,7 @@
 const db = require('../models'); 
 const Message = db.Message
+const Comment = db.Comment
+const fs = require('fs')
 
 exports.create = async (req, res, next) => {
     if (req.file === undefined || null) {
@@ -76,3 +78,69 @@ exports.findToUser = async (req, res, next) => {
       res.status(404).json({ error })
     })
 }
+
+exports.deleteMessage = async (req, res, next) => {
+    try {
+      const post = await Message.findOne({
+        where: {id: req.params.id}
+      });
+      if (post === null) {
+        console.log(error)
+        return res.status(404).send({ error })
+      } else {
+        if (post.picture === null || undefined) {
+            Message.destroy(
+            {
+              where: {id: req.params.id}
+            })
+            .then(function() {
+              console.log('Post is delete')
+              return res.status(200).json("Post is delete")
+            })
+            .catch(function(error) {
+              console.log(error)
+              return res.status(400).send({ error })
+            })
+            Comment.destroy(
+              {
+                where: {MessageId: req.params.id}
+              })
+              .then(function() {
+                console.log('Comment is delete')
+              })
+              .catch(function(error) {
+                console.log(error)
+                return res.status(400).send({ error })
+              })
+        } else {
+          const filename = post.picture.split('/images/')[1]; 
+          fs.unlink(`images/${filename}`, () => {
+            Message.destroy(
+            {
+              where: {id: req.params.id}
+            })
+            .then(function() {
+                console.log("Post is delete")
+              return res.status(200).json("user is delete")
+            })
+            .catch(function(error) {
+              return res.status(400).send({ error })
+            })
+            Comment.destroy(
+              {
+                where: {MessageId: req.params.id}
+              })
+              .then(function() {
+                console.log('Comment is delete')
+              })
+              .catch(function(error) {
+                console.log(error)
+                return res.status(400).send({ error })
+              })
+          })
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
