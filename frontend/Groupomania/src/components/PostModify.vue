@@ -116,16 +116,15 @@ export default {
                    }
                 );
                 this.message = response.data;
-                console.log(this.message)
             } catch (error) {
                 console.log(error);
             }
         },
   }, 
 
-  async created() {
+  created() {
       this.id = this.$route.params.id;
-      await this.getMessages()
+      this.getMessages();
   }
 }
 </script>
