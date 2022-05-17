@@ -222,7 +222,7 @@ export default {
     width: 100px; 
     height: 100px;
     &--message {
-        height: 300px;
+        width: 100%;
     }
 }
 </style>

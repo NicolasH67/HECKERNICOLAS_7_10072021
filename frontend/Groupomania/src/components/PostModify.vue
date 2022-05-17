@@ -9,8 +9,14 @@
                 id="message"
                 class="txt"
                 cols="100"
-                rows="10">
+                rows="10"
+                :value="message.content">
               </textarea><br />
+              <img
+                v-if="message.picture != null"
+                :src="message.picture"
+                alt="Photo de profil"
+                class="picture"/><br />
               <label for="picture--option">Voulez-vous ajoutez ou modifier une Image</label><br />
               <input type="radio" name="picture--option" id="yes" value="Oui"><label for="yes">oui</label><br />
               <input type="radio" name="picture--option" id="No" value="Non" checked><label for="no">non</label><br />
@@ -36,6 +42,7 @@ const axios = require('axios');
 export default {
   date() {
     return {
+      message: [],
       file: ''
     };
   },
@@ -77,7 +84,7 @@ export default {
 
         this.submitted = true;
         axios
-          .post(`http://localhost:3066/api/post`, formData, {
+          .put(`http://localhost:3066/api/post`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
               authorization: token
@@ -85,7 +92,7 @@ export default {
           })
           .then(function(response) {
             console.log(response.status);
-            window.location.href = '/home';
+            window.location.href = '/Profil';
           })
           .catch(function(error) {
             console.log(error);
@@ -93,11 +100,32 @@ export default {
       } catch (error) {
         console.log(error);
       } 
-    }
+    }, 
+
+    async getMessages() {
+            const token = localStorage.getItem("token")
+            const idMessage = this.id;
+            console.log(this.id)
+            try {
+                const response = await axios.get(
+                   `http://localhost:3066/api/post/${idMessage}`,
+                   {
+                       headers: {
+                           'authorization': token
+                       }
+                   }
+                );
+                this.message = response.data;
+                console.log(this.message)
+            } catch (error) {
+                console.log(error);
+            }
+        },
   }, 
 
   async created() {
       this.id = this.$route.params.id;
+      await this.getMessages()
   }
 }
 </script>
@@ -138,5 +166,9 @@ export default {
 }
 .delete {
     margin-top: 15px;
+}
+
+.picture {
+  width: 45%;
 }
 </style>
