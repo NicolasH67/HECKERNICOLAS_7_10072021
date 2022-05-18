@@ -68,6 +68,7 @@ export default {
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
     },
+    
     async getUser() {
       const userId = localStorage.getItem('userId');
       const token = localStorage.getItem('token');

@@ -1,6 +1,7 @@
 <template>
 
     <div class="content">
+        <h1>Changer votre mot de passe </h1>
         <form>
             <label for="oldPassword" id="oldPasswordLabel">Votre ancien mot de passe</label><br />
             <input type="password" name="oldPassword" id="oldPassword"><br /><br />

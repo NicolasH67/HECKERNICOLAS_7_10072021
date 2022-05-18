@@ -43,6 +43,7 @@ export default {
   date() {
     return {
       message: [],
+      content: '',
       file: ''
     };
   },
@@ -50,25 +51,6 @@ export default {
   methods: {
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
-    },
-    async getUser() {
-      const userId = localStorage.getItem('userId');
-      const token = localStorage.getItem('token');
-      console.log('userId is ', userId);
-      try {
-        const response = await axios.get(
-          `http://localhost:3066/api/auth/profil/${userId}`,
-          {
-            headers: {
-              authorization: token
-            }
-          }
-        );
-        this.user = response.data;
-        console.log(this.user);
-      } catch (error) {
-        console.log(error);
-      }
     },
 
     async postMessage() {
@@ -116,15 +98,18 @@ export default {
                    }
                 );
                 this.message = response.data;
+                this.content = response.data.content;
+                console.log(this.message)
+                console.log(this.content)
             } catch (error) {
                 console.log(error);
             }
         },
   }, 
 
-  created() {
-      this.id = this.$route.params.id;
-      this.getMessages();
+   async created() {
+    this.id = this.$route.params.id;
+    await this.getMessages();
   }
 }
 </script>

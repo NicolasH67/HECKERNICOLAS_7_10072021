@@ -214,10 +214,6 @@ exports.password = async (req, res, next) => {
               console.log(error)
               return res.status(400).send({ error })
             })
-            const messages = Message.findAll(
-            {
-              where: {UserID: req.params.id}
-            })
             Message.destroy(
             {
               where: {UserID: req.params.id}
@@ -243,6 +239,7 @@ exports.password = async (req, res, next) => {
               console.log(error)
               return res.status(400).send({ error })
             })
+            
         } else {
           const filename = user.picture.split('/images/')[1]; 
           fs.unlink(`images/${filename}`, () => {
