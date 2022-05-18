@@ -42,6 +42,9 @@
           :value="user.bio">
         </textarea><br />
         <button class="btn modifyBtn">Modifier</button>
+        <button class="btn deleteBtn" @click="password()">
+          Moddifer votre mot de passe
+        </button>
       </div>
     </form>
     <br />
@@ -145,6 +148,13 @@ export default {
           console.log(error)
         }
       })
+    }, 
+
+    password() {
+      addEventListener('click', (e) => {
+        e.preventDefault(); 
+        window.location.href = "/password"
+      })
     }
   },
 
@@ -169,7 +179,6 @@ export default {
   font-weight: bold;
   font-style: italic;
 }
-
 .btn {
   margin-right: 20px;
   color: #000000;

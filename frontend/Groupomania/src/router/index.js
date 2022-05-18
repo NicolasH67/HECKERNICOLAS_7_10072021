@@ -12,6 +12,7 @@ import Message from '../views/Message.vue'
 import Admin from '../views/Admin.vue'
 import AdminUser from '../views/AdminUser.vue'
 import AdminPost from '../views/AdminPost.vue'
+import password from '../views/password.vue'
 
 Vue.use(VueRouter)
 
@@ -70,6 +71,11 @@ const routes = [
     path: '/Admin/Post',
     name: 'AdminPost',
     component: AdminPost
+  },
+  {
+    path: '/password',
+    name: 'password',
+    component: password
   },
   {
     path: '/ProfilModify',

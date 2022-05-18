@@ -73,6 +73,45 @@ exports.findOneUser = async (req, res, next) => {
   })
 }
 
+exports.password = async (req, res, next) => {
+  const oldPassword = req.body.oldPassword
+  const newPassword = req.body.newPassword
+  try {
+    const user = await User.findOne({
+        where: { id: req.params.id } 
+    }); 
+    if (user === null) {
+        return res.status(404).send({ error: "Vous n'etes pas connecter" });
+    } else {
+      console.log(oldPassword, newPassword)
+      const oldHash = await bcrypt.compare(oldPassword, user.password);
+      if (oldHash === true) {
+        const newHash = await bcrypt.hash(newPassword, 10);
+        const updateUser = await User.update(
+          {
+            password: newHash,
+          },
+          {
+            where: {id: req.params.id}
+          })
+          .then(function(User) {
+            return res.status(200).json("Mot de passe modifier")
+          })
+          .catch(function(error) {
+            console.log(error);
+            return res.status(400).send({ error });
+          })
+      } else (error) => {
+          console.log(error)
+          return res.status(400).send({ error: "Votre ancien mot de passe est incorecte" })
+      } 
+    }
+  } catch (error) {
+    console.log(error)
+    return res.status(400).send({ error });
+  }
+}
+
   exports.update = async (req, res, next) => {
     try {
       const user = await User.findOne({
