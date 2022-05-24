@@ -10,9 +10,6 @@
                         <th>User</th>
                         <th>Publication</th>
                         <th>picture</th>
-                        <th>like</th>
-                        <th>dislike</th>
-                        <th>commentaire</th>
                         <th>delete</th>
                     </tr>
                 </thead>
@@ -22,9 +19,6 @@
                         <td>{{ item.UserId }}</td>
                         <td>{{ item.content }}</td>
                         <td><img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture" width="50px" /><span v-else>null</span></td>
-                        <td>{{ item.like }}</td>
-                        <td>{{ item.dislike }}</td>
-                        <td></td>
                         <td><button @click="deletePost(item.id)">supprimer</button></td>
                     </tr>
                 </tbody>

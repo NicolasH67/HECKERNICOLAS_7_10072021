@@ -8,10 +8,6 @@
                 <p class="message__text">{{ message.content }}</p>
                 <img v-if="message.picture" :src="message.picture" alt="ilustration" class="picture" />
             </div>
-            <div class="message__option">
-                <button class="message__option--like">j'aime ({{ message.like}})</button>
-                <button class="message__option--dislike">j'aime pas ({{ message.dislike}})</button>
-            </div>
         </div>
 
         <form class="form" @submit.prevent="postComments">
@@ -163,30 +159,10 @@ export default {
 
 .message {
     border: 5px solid #F53008;
-    width: 75%;
+    width: 100%;
     text-align: justify;
     padding: 15px;
-    border-radius: 15px 0 0 15px;
-    &__option {
-        width: 20%;
-        border: 5px solid #F53008;
-        border-radius: 0 15px 15px 0;
-        &--like, &--dislike {
-            width: 50%;
-            height: 50px;
-            &:hover {
-                background-color: #ffd6d8;
-            }
-        }
-        &--comment {
-            width: 100%;
-            height: 10%;
-            margin-top: 50px;
-            &:hover {
-                background-color: #ffd6d8;
-            }
-        }
-    }
+    border-radius: 15px;
 }
 
 .name {

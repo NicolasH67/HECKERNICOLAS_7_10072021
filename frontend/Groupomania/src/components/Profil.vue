@@ -25,8 +25,6 @@
                 </div>
                 <div class="message__option">
                     <button class="message__option--modify" @click="postModify(item.id)">Modifier ou supprimer la Publication</button>
-                    <button class="message__option--like">j'aime<br />(0)</button>
-                    <button class="message__option--dislike">j'aime pas<br />(0)</button>
                     <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
                     <div class="message__option__lastcomment">
                         <h5>Dernier commentaire : </h5>
@@ -179,14 +177,6 @@ export default {
         width: 25%;
         border: 5px solid #F53008;
         border-radius: 0 15px 15px 0;
-        &--like, &--dislike {
-            cursor: pointer;
-            width: 50%;
-            height: 20%;
-            &:hover {
-                background-color: #ffd6d8;
-            }
-        }
         &--modify {
             margin-bottom: 15px;
         }

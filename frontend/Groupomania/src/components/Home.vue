@@ -6,13 +6,11 @@
         </button>
         <div v-for="(item) in messages" :key="item.id" class="content__message">
             <div class="message" @click="windowHref(item.id)">
-                <h5><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></h5>
+                <h5 :id='item.UserId'></h5>
                 <p class="message__text">{{ item.content }}</p>
                 <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture" />
             </div>
             <div class="message__option">
-                <button class="message__option--like">j'aime (0)</button>
-                <button class="message__option--dislike">j'aime pas (0)</button>
                 <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
                 <div class="message__option__lastcomment">
                     <h5>Dernier commentaire : </h5>
@@ -33,6 +31,7 @@ export default {
         return {
             messages: [],
             user: [],
+            comment: [], 
         };
     },
 
@@ -56,18 +55,17 @@ export default {
                    }
                 );
                 this.messages = response.data;
+                console.log(this.messages)
             } catch (error) {
                 console.log(error);
             }
         },
 
         async getUsers() {
-            const userId = localStorage.getItem("userId")
             const token = localStorage.getItem("token")
-            console.log("userId is ", userId)
             try {
                 const response = await axios.get(
-                    `http://localhost:3066/api/auth/profil/${userId}`,
+                    `http://localhost:3066/api/admin//Users`,
                     {
                         headers: {
                             'authorization': token
@@ -87,11 +85,23 @@ export default {
                 e.preventDefault()
                 window.location.href = `/message/${id}`
           })
-        }
-    },
+        }, 
+
+        displayName() {
+            this.user.forEach(user => {
+                let name = user.name;
+                let lastname = user.lastname;
+                let id = user.id;
+                let item = document.getElementById(`${id}`);
+                item.innerHTML = `<span class="name">${name} </span><span class="lastname">${lastname}</span>`;
+            });
+        },
+    },    
 
     async created() {
         await this.getMessages();
+        await this.getUsers();
+        await this.displayName()
     }
 };
 </script>
@@ -132,19 +142,10 @@ export default {
         width: 20%;
         border: 5px solid #F53008;
         border-radius: 0 15px 15px 0;
-        &--like, &--dislike {
-            width: 50%;
-            height: 10%;
-            cursor: pointer;
-            &:hover {
-                background-color: #ffd6d8;
-            }
-        }
         &--comment {
             cursor: pointer;
             width: 100%;
-            height: 10%;
-            margin-top: 50px;
+            height: 30px;
             &:hover {
                 background-color: #ffd6d8;
             }
@@ -156,5 +157,13 @@ export default {
 }
 .link {
     width: 100%;
+}
+
+.name {
+    text-transform: uppercase;
+}
+
+.lastname {
+    text-transform: capitalize; 
 }
 </style>
