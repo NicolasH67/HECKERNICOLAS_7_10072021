@@ -6,7 +6,7 @@
         </button>
         <div v-for="(item) in messages" :key="item.id" class="content__message">
             <div class="message" @click="windowHref(item.id)">
-                <h5 :id='item.UserId'></h5>
+                <h5><span class="name">{{ item.name }} <span class="lastname">{{ item.lastname }}</span></span></h5>
                 <p class="message__text">{{ item.content }}</p>
                 <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture" />
             </div>
@@ -14,8 +14,7 @@
                 <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
                 <div class="message__option__lastcomment">
                     <h5>Dernier commentaire : </h5>
-                    <p>nom de la personne</p>
-                    <p>le commentaire : </p>
+                    <p :id='item.id'></p>
                 </div>
             </div>
         </div>
@@ -61,24 +60,6 @@ export default {
             }
         },
 
-        async getUsers() {
-            const token = localStorage.getItem("token")
-            try {
-                const response = await axios.get(
-                    `http://localhost:3066/api/admin//Users`,
-                    {
-                        headers: {
-                            'authorization': token
-                        }   
-                    }
-                );
-                this.user = response.data;
-                console.log(this.user)
-            } catch (error) {
-                console.log(error);
-            }
-        }, 
-
         windowHref(id) {
             addEventListener('click', (e) => {
                 console.log(id)
@@ -87,21 +68,38 @@ export default {
           })
         }, 
 
-        displayName() {
-            this.user.forEach(user => {
-                let name = user.name;
-                let lastname = user.lastname;
-                let id = user.id;
-                let item = document.getElementById(`${id}`);
-                item.innerHTML = `<span class="name">${name} </span><span class="lastname">${lastname}</span>`;
-            });
+        async getComment() {
+            const token = localStorage.getItem("token")
+            try {
+                const response = await axios.get(
+                   `http://localhost:3066/api/admin/comment`,
+                   {
+                       headers: {
+                           'authorization': token
+                       }
+                   }
+                );
+                this.comment = response.data;
+                console.log(this.comment)
+            } catch (error) {
+                console.log(error);
+            }
         },
+
+        displayComment() {
+            this.comment.forEach(comment => {
+                let content = comment.content;
+                let id = comment.MessageId;
+                let item = document.getElementById(`${id}`);
+                item.textContent = content;
+            })
+        }
     },    
 
     async created() {
         await this.getMessages();
-        await this.getUsers();
-        await this.displayName()
+        await this.getComment();
+        await this.displayComment();
     }
 };
 </script>

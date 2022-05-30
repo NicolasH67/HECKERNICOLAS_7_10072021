@@ -9,8 +9,8 @@ exports.create = async (req, res, next) => {
             UserId: req.body.idUSERS,
             content: req.body.content, 
             picture: null, 
-            like: 0, 
-            dislike: 0
+            name: req.body.name,
+            lastname: req.body.lastname,
         })
         .then(function(newMessage) {
             console.log(newMessage)
@@ -25,8 +25,8 @@ exports.create = async (req, res, next) => {
             UserId: req.body.idUSERS,
             content: req.body.content, 
             picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`, 
-            like: 0, 
-            dislike: 0
+            name: req.body.name,
+            lastname: req.body.lastname,
         })
         .then(function(newMessage) {
             console.log(newMessage)
@@ -142,5 +142,78 @@ exports.deleteMessage = async (req, res, next) => {
       }
     } catch (error) {
       console.log(error)
+    }
+  }; 
+
+  exports.update = async (req, res, next) => {
+    try {
+      const message = Message.findOne({
+        where: {id: req.params.id }
+      }); 
+      if (message === null) {
+        return res.status(404)
+      } else {
+        if (req.file === undefined || null) {
+          const updateMessage = Message.update(
+            {
+              content: req.body.content,
+            },
+            {
+              where: { id: req.params.id}
+            })
+            .then(function(Message) {
+              return res.status(200).json(Message)
+            })
+            .catch(function(error) {
+              console.log(error)
+              return res.status(400).send({ error });
+            })
+        } else {
+          if (message.picture === undefined || null) {
+            const updateMessage = Message.update(
+              {
+                content: req.body.content,
+                picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+              }, 
+              {
+                where: { id: req.params.id }
+              })
+              .then(function(Message) {
+                return res.status(200).json(Message)
+              })
+              .catch(function(error) {
+                console.log(error)
+                return res.status(400).send({ error });
+              })
+          } else {
+            Message.findOne({
+              id: req.params.id,
+            })
+            .then(message => {
+              const filename = message.picture.split('/images/')[1]; 
+              fs.unlink(`images/${filename}`, ()=> {
+                const updateMessage = Message.update(
+                  {
+                    content: req.body.content,
+                    picture: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                  }, 
+                  {
+                    where: { id: req.params.id }
+                  })
+                  .then(function(Message) {
+                    return res.status(200).json(Message)
+                  })
+                  .catch(function(error) {
+                    console.log(error)
+                    return res.status(400).send({ error });
+                  })
+              })
+            })
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error)
+      return res.status(400).send({ error }); 
     }
   }

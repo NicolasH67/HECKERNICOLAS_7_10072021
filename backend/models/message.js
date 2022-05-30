@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
   };
   Message.init({
     UserId: DataTypes.INTEGER,
+    name: DataTypes.STRING,
+    lastname: DataTypes.STRING,
     content: DataTypes.STRING,
     picture: DataTypes.STRING,
-    like: DataTypes.INTEGER,
-    dislike: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Message',

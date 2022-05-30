@@ -35,6 +35,7 @@ const axios = require('axios');
 export default {
   date() {
     return {
+      user: [],
       file: ''
     };
   },
@@ -43,6 +44,7 @@ export default {
     handleFileUpload() {
       this.file = this.$refs.file.files[0];
     },
+
     async getUser() {
       const userId = localStorage.getItem('userId');
       const token = localStorage.getItem('token');
@@ -75,6 +77,8 @@ export default {
         formData.append('idUSERS', userId); 
         formData.append('picture', picture); 
         formData.append('content', content); 
+        formData.append('name', this.user.name); 
+        formData.append('lastname', this.user.lastname); 
 
         this.submitted = true;
         axios
@@ -95,7 +99,11 @@ export default {
         console.log(error);
       } 
     }
-  }
+  }, 
+
+  async created() {
+        await this.getUser();
+    }
 }
 </script>
 

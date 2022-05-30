@@ -28,8 +28,7 @@
                     <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
                     <div class="message__option__lastcomment">
                         <h5>Dernier commentaire : </h5>
-                        <p>nom de la personne</p>
-                        <p>le commentaire : </p>
+                        <p :id="item.id"></p>
                     </div>
                 </div>
             </div>
@@ -46,6 +45,7 @@ export default {
         return {
             user: [],
             messages: [],
+            comment: [],
         };
     },
 
@@ -124,11 +124,40 @@ export default {
                 console.log(error);
             }
         },
+
+        async getComment() {
+            const token = localStorage.getItem("token")
+            try {
+                const response = await axios.get(
+                   `http://localhost:3066/api/admin/comment`,
+                   {
+                       headers: {
+                           'authorization': token
+                       }
+                   }
+                );
+                this.comment = response.data;
+                console.log(this.comment)
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        displayComment() {
+            this.comment.forEach(comment => {
+                let content = comment.content;
+                let id = comment.MessageId;
+                let item = document.getElementById(`${id}`);
+                item.textContent = content;
+            })
+        }
     },
 
-    created() {
-        this.getMessages();
-        this.getUser();
+    async created() {
+        await this.getMessages();
+        await this.getUser();
+        await this.getComment();
+        await this.displayComment()
     }
 };
 </script>

@@ -28,7 +28,7 @@
                 v-on:change="handleFileUpload()"
                 accept="image/png, image/jpeg, image/jpg"/><br /> <br />
               <button class="btn">Modifier</button><br />
-              <button class="btn delete">Supprimer</button>
+              <button class="btn delete" @click="deletePost(message.id)">Supprimer</button>
             </div>
 
 
@@ -55,6 +55,7 @@ export default {
 
     async postMessage() {
       const token = localStorage.getItem('token');
+      const idMessage = this.id
       try {
         const content = document.getElementById('message').value; 
         const picture = this.file;
@@ -66,7 +67,7 @@ export default {
 
         this.submitted = true;
         axios
-          .put(`http://localhost:3066/api/post`, formData, {
+          .put(`http://localhost:3066/api/post/${idMessage}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
               authorization: token
@@ -105,6 +106,31 @@ export default {
                 console.log(error);
             }
         },
+
+        deletePost(id) {
+            addEventListener('click', (e) => {
+                e.preventDefault();
+                const token = localStorage.getItem('token');
+                console.log(`http://localhost:3066/api/auth/post/${id}`)
+                try {
+                    axios
+                        .delete(`http://localhost:3066/api/post/${id}`, {
+                            headers: {
+                                authorization: token
+                            }
+                        })
+                        .then(function(response) {
+                            console.log(response.status);
+                            window.location.href = "/Home"
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                        })
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+        }, 
   }, 
 
    async created() {

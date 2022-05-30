@@ -20,6 +20,8 @@ exports.createComment = async (req, res, next) => {
   const newComment = await Comments.create({
     MessageId: req.body.MessageId,
     UserID: req.body.UserId,
+    name: req.body.name,
+    lastname: req.body.lastname,
     content: req.body.content, 
   })
   .then(function(newComment) {

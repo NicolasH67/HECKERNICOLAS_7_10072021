@@ -4,7 +4,7 @@
         
         <div class="content__message">
             <div class="message">
-                <h5><router-link :to="{ path: `/profil/${user.id}`}"><span class="name">{{ user.name }} <span class="lastname">{{ user.lastname }}</span></span></router-link></h5>
+                <h5><router-link :to="{ path: `/profil/${message.UserId}`}"><span class="name">{{ message.name }} <span class="lastname">{{ message.lastname }}</span></span></router-link></h5>
                 <p class="message__text">{{ message.content }}</p>
                 <img v-if="message.picture" :src="message.picture" alt="ilustration" class="picture" />
             </div>
@@ -17,7 +17,7 @@
 
         <div v-for="(item) in comments" :key="item.id">
             <div class="comment">
-                <h5><span class="name">nom <span class="lastname">prenom</span></span></h5>
+                <h5><span class="name">{{ item.name }} <span class="lastname">{{ item.lastname }}</span></span></h5>
                 <p class="message__text">{{ item.content }}</p>
             </div>
         </div>
@@ -31,8 +31,8 @@ export default {
     data() {
         return {
             message: [],
-            user: [],
             comments: [],
+            user: [],
             id: '',
         };
     },
@@ -44,6 +44,26 @@ export default {
               window.location.href = "/Post"
           })
       },
+
+      async getUser() {
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+      console.log('userId is ', userId);
+      try {
+        const response = await axios.get(
+          `http://localhost:3066/api/auth/profil/${userId}`,
+          {
+            headers: {
+              authorization: token
+            }
+          }
+        );
+        this.user = response.data;
+        console.log(this.user);
+      } catch (error) {
+        console.log(error);
+      }
+    },
       
       async postComments() {
           const messageId = this.id;
@@ -51,13 +71,14 @@ export default {
           const token = localStorage.getItem('token');
             try {
                 const content = document.getElementById('comment').value;
-
                 this.submitted = true;
                 axios.post(`http://localhost:3066/api/comment`, 
                 {
                     UserId: userId, 
                     MessageId: messageId, 
-                    content: content
+                    content: content, 
+                    name: this.user.name,
+                    lastname: this.user.lastname,
                 }, {
                     headers: {
                         authorization: token
@@ -74,25 +95,6 @@ export default {
                     console.log(error);
                 } 
       },
-
-      async getUser() {
-            const userId = this.message.UserId;
-            console.log(userId)
-            const token = localStorage.getItem("token")
-            try {
-                const response = await axios.get(
-                    `http://localhost:3066/api/auth/profil/${userId}`,
-                    {
-                        headers: {
-                            'authorization': token
-                        }   
-                    }
-                );
-                this.user = response.data;
-            } catch (error) {
-                console.log(error);
-            }
-        },
 
         async getMessages() {
             const token = localStorage.getItem("token")
@@ -132,13 +134,12 @@ export default {
                 console.log(error);
             }
         },
-        
     },
 
     async created() {
         this.id = this.$route.params.id;
         await this.getMessages();
-        this.getUser();
+        await this.getUser();
         await this.getComment();
     }
 };
@@ -163,6 +164,19 @@ export default {
     text-align: justify;
     padding: 15px;
     border-radius: 15px;
+    &__option {
+        width: 20%;
+        border: 5px solid #F53008;
+        border-radius: 0 15px 15px 0;
+        &--comment {
+            width: 100%;
+            height: 10%;
+            margin-top: 50px;
+            &:hover {
+                background-color: #ffd6d8;
+            }
+        }
+    }
 }
 
 .name {

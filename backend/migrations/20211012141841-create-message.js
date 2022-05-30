@@ -12,6 +12,14 @@ module.exports = {
         allowNull: true,
         type: Sequelize.INTEGER
       },
+      name: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      lastname: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       content: {
         allowNull: false,
         type: Sequelize.STRING
@@ -19,14 +27,6 @@ module.exports = {
       picture: {
         allowNull: true,
         type: Sequelize.STRING
-      },
-      like: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      dislike: {
-        allowNull: false,
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
