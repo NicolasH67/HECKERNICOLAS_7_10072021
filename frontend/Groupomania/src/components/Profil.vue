@@ -24,7 +24,7 @@
                     <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture--message" />
                 </div>
                 <div class="message__option">
-                    <button @click="deleteItem(item.id)">supprimer la publication</button>
+                    <button @click="deletePost(item.id)">supprimer la publication</button>
                     <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
                 </div>
             </div>
@@ -112,13 +112,10 @@ export default {
                 console.log(error);
             }
         },
-    },
-
-    deleteItem (id) {
+        deletePost(id) {
             addEventListener('click', (e) => {
                 e.preventDefault();
                 const token = localStorage.getItem('token');
-                console.log(`http://localhost:3066/api/auth/post/${id}`)
                 try {
                     axios
                         .delete(`http://localhost:3066/api/post/${id}`, {
@@ -128,7 +125,7 @@ export default {
                         })
                         .then(function(response) {
                             console.log(response.status);
-                            window.location.href = "/profil"
+                            window.location.href = "/Profil"
                         })
                         .catch(function(error) {
                             console.log(error)
@@ -138,6 +135,7 @@ export default {
                 }
             })
         }, 
+    },
 
     async created() {
         await this.getMessages();
