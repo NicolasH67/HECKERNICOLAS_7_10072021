@@ -102,7 +102,6 @@ export default {
             addEventListener('click', (e) => {
                 e.preventDefault();
                 const token = localStorage.getItem('token');
-                console.log(`http://localhost:3066/api/auth/post/${id}`)
                 try {
                     axios
                         .delete(`http://localhost:3066/api/post/${id}`, {

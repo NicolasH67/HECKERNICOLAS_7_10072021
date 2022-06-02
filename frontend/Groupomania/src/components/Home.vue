@@ -140,10 +140,16 @@ export default {
     text-align: justify;
     padding: 15px;
     border-radius: 15px 0 0 15px;
+    @media screen and (max-width: 768px) {
+        width: 50%;
+    }
     &__option {
         width: 20%;
         border: 5px solid #F53008;
         border-radius: 0 15px 15px 0;
+        @media screen and (max-width: 768px) {
+            width: 30%;
+        }
         &--comment {
             cursor: pointer;
             width: 100%;
@@ -156,6 +162,9 @@ export default {
 }
 .picture {
     height: 300px;
+    @media screen and (max-width: 768px) {
+        height: 90px;
+    }
 }
 .link {
     width: 100%;
