@@ -12,7 +12,7 @@
 
         <form class="form" @submit.prevent="postComments">
             <br />
-            <textarea name="commentaire" id="comment" cols="100" rows="1"></textarea><button>publiez</button>
+            <textarea name="commentaire" id="comment" cols="50" rows="2"></textarea><button>publiez</button>
         </form>
 
         <div v-for="(item) in comments" :key="item.id">

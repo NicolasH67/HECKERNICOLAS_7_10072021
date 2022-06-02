@@ -8,8 +8,8 @@
                 name="txt"
                 id="message"
                 class="txt"
-                cols="100"
-                rows="10">
+                rows="10"
+                cols="75">
               </textarea><br />
               <label for="picture--option">Voulez-vous ajoutez une Image</label><br />
               <input type="radio" name="picture--option" id="yes" value="Oui"><label for="yes">oui</label><br />
@@ -110,6 +110,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.content {
+  margin-right: auto;
+  margin-left: auto;
+}
 #txt {
     border-radius: 20px;
     padding: 20px;
@@ -140,5 +144,9 @@ export default {
     display: none;
     margin-right: auto;
     margin-left: auto;
+}
+
+#message {
+  width: 100%;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
 
     <div class="content">
-        <button class="btn" id="btn" @click="post">
+        <button class="btn btnNew" id="btn" @click="post">
             créer une publication
         </button>
         <div v-for="(item) in messages" :key="item.id" class="content__message">
@@ -114,6 +114,10 @@ export default {
         margin-left: auto;
         padding-right: 60px;
         display: flex;
+        @media screen and (max-width: 768px) {
+            width: 103%;
+            margin-right: 0px;
+        }
     }
 }
 .btn {
@@ -163,5 +167,11 @@ export default {
 
 .lastname {
     text-transform: capitalize; 
+}
+
+.btnNew {
+    @media screen and (max-width: 426px) {
+        margin-top: 25px;
+        }
 }
 </style>

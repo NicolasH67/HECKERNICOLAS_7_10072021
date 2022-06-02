@@ -142,19 +142,31 @@ export default {
 .content {
     width: 100%;
     display: flex;
+    @media screen and (max-width: 426px) {
+        flex-direction: column;
+    }
     &__message {
         margin-top: 25px;
         margin-right: auto;
         margin-left: auto;
         padding-right: 60px;
         display: flex;
+        @media screen and (max-width: 426px) {
+            padding-right: 0;
+        }
     }
 }
 .publication {
     width: 70%;
+    @media screen and (max-width: 426px) {
+        width: 100%;
+    }
 }
 .profil {
     width: 30%;
+    @media screen and (max-width: 426px) {
+        width: 100%;
+    }
 }
 .btn {
     width: 75%;

@@ -37,8 +37,6 @@
           name="txt"
           id="bio"
           class="txt"
-          cols="50"
-          rows="5"
           :value="user.bio">
         </textarea><br />
         <button class="btn modifyBtn">Modifier</button>
@@ -174,6 +172,7 @@ export default {
 .txt {
   border-radius: 20px;
   padding: 20px;
+  width: 75%;
 }
 .txt--label {
   font-size: 1.5rem;

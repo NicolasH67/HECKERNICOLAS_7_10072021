@@ -14,7 +14,6 @@
                         <th>bio</th>
                         <th>password</th>
                         <th>delete</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -209,7 +208,7 @@ export default {
     }
     .fl-table td, .fl-table th {
         padding: 20px .625em .625em .625em;
-        height: 60px;
+        height: 100px;
         vertical-align: middle;
         box-sizing: border-box;
         overflow-x: hidden;

@@ -42,6 +42,10 @@ export default {
 }
 .home {
     display: flex;
+    @media screen and (max-width: 500px) {
+      display: flex;
+      flex-direction: column;
+        }
     &__nav {
         width: 200px;
         height: 100%;
@@ -52,20 +56,20 @@ export default {
         background-color: #ffd6d8;
         display: flex;
         flex-direction: column;
-        @media screen and (max-width: 768px) {
-            flex-direction: row;
+        @media screen and (max-width: 426px) {
+            flex-direction: columns;
             width: 106%;
+            height: 300px;
             margin-right: 0px;
-            height: auto;
+            padding-bottom: 0px ;
         }
         &__img {
             width: 150px;
             margin: auto;
             display: block;
             border-radius: 150px;
-            @media screen and (max-width: 768px) {
-                width: 50px;
-                margin: 10px;
+            @media screen and (max-width: 426px) {
+              display: none;
             }
         }
         &__link {
@@ -75,10 +79,10 @@ export default {
             font-style: italic;
             margin: 15px auto auto auto;
             &:hover {
-              font-weight: bold;
-              border: 3px solid #F53008;
-              border-radius: 10px;
-              box-shadow: 0px 0px 15px #F53008;
+                  font-weight: bold;
+    border: 3px solid #F53008;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px #F53008;
             }
         }
     }
