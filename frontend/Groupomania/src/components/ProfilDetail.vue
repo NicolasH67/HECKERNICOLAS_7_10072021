@@ -19,10 +19,6 @@
                 </div>
                 <div class="message__option">
                     <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
-                    <div class="message__option__lastcomment">
-                        <h5>Dernier commentaire : </h5>
-                        <p :id="item.id"></p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -185,7 +181,7 @@ export default {
         border-radius: 0 15px 15px 0;
         &--comment {
             width: 100%;
-            height: 20px;
+            height: 50px;
             &:hover {
                 background-color: #ffd6d8;
             }

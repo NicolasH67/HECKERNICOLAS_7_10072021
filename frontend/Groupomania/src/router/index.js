@@ -6,7 +6,6 @@ import Home from '../views/Home.vue'
 import Profil from '../views/Profil.vue'
 import ProfilDetail from '../views/ProfilDetail.vue'
 import Post from '../views/Post.vue'
-import PostModify from '../views/PostModify.vue'
 import ProfilModify from '../views/ProfilModify.vue'
 import Message from '../views/Message.vue'
 import Admin from '../views/Admin.vue'
@@ -46,11 +45,6 @@ const routes = [
     path: '/Post',
     name: 'Post',
     component: Post
-  },
-  {
-    path: '/PostModify/:id',
-    name: 'PostModify',
-    component: PostModify
   },
   {
     path: '/Message/:id',

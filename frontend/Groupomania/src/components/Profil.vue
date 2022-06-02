@@ -24,12 +24,8 @@
                     <img v-if="item.picture" :src="item.picture" alt="ilustration picture" class="picture--message" />
                 </div>
                 <div class="message__option">
-                    <button class="message__option--modify" @click="postModify(item.id)">Modifier ou supprimer la Publication</button>
+                    <button @click="deleteItem(item.id)">supprimer la publication</button>
                     <button class="message__option--comment" @click="windowHref(item.id)">commenter</button>
-                    <div class="message__option__lastcomment">
-                        <h5>Dernier commentaire : </h5>
-                        <p :id="item.id"></p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -45,7 +41,6 @@ export default {
         return {
             user: [],
             messages: [],
-            comment: [],
         };
     },
 
@@ -61,13 +56,6 @@ export default {
             addEventListener('click', (e) => {
                 e.preventDefault()
                 window.location.href = "/Admin"
-            })
-        },
-        
-        postModify(id) {
-            addEventListener('click', (e) => {
-                e.preventDefault()
-                window.location.href = `/PostModify/${id}`
             })
         },
 
@@ -124,40 +112,36 @@ export default {
                 console.log(error);
             }
         },
-
-        async getComment() {
-            const token = localStorage.getItem("token")
-            try {
-                const response = await axios.get(
-                   `http://localhost:3066/api/admin/comment`,
-                   {
-                       headers: {
-                           'authorization': token
-                       }
-                   }
-                );
-                this.comment = response.data;
-                console.log(this.comment)
-            } catch (error) {
-                console.log(error);
-            }
-        },
-
-        displayComment() {
-            this.comment.forEach(comment => {
-                let content = comment.content;
-                let id = comment.MessageId;
-                let item = document.getElementById(`${id}`);
-                item.textContent = content;
-            })
-        }
     },
+
+    deleteItem (id) {
+            addEventListener('click', (e) => {
+                e.preventDefault();
+                const token = localStorage.getItem('token');
+                console.log(`http://localhost:3066/api/auth/post/${id}`)
+                try {
+                    axios
+                        .delete(`http://localhost:3066/api/post/${id}`, {
+                            headers: {
+                                authorization: token
+                            }
+                        })
+                        .then(function(response) {
+                            console.log(response.status);
+                            window.location.href = "/profil"
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                        })
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+        }, 
 
     async created() {
         await this.getMessages();
         await this.getUser();
-        await this.getComment();
-        await this.displayComment()
     }
 };
 </script>
@@ -212,7 +196,7 @@ export default {
         &--comment {
             cursor: pointer;
             width: 100%;
-            height: 10%;
+            height: 50px;
             margin-top: 50px;
             &:hover {
                 background-color: #ffd6d8;
@@ -220,13 +204,10 @@ export default {
         }
         &--modif {
             width: 100%;
-            height: 10%;
+            height: 50px;
             &:hover {
                 background-color: #ffd6d8;
             }
-        }
-        &__lastcomment {
-            padding-bottom: 50px;
         }
     }
 }
