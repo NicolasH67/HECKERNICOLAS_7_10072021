@@ -142,7 +142,7 @@ export default {
 .content {
     width: 100%;
     display: flex;
-    @media screen and (max-width: 426px) {
+    @media screen and (max-width: 769px) {
         flex-direction: column;
     }
     &__message {
@@ -151,20 +151,20 @@ export default {
         margin-left: auto;
         padding-right: 60px;
         display: flex;
-        @media screen and (max-width: 426px) {
+        @media screen and (max-width: 769px) {
             padding-right: 0;
         }
     }
 }
 .publication {
     width: 70%;
-    @media screen and (max-width: 426px) {
+    @media screen and (max-width: 769px) {
         width: 100%;
     }
 }
 .profil {
     width: 30%;
-    @media screen and (max-width: 426px) {
+    @media screen and (max-width: 769px) {
         width: 100%;
     }
 }
