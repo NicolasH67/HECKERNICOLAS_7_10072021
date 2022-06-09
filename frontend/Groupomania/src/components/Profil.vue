@@ -237,9 +237,6 @@ export default {
 .picture {
     width: 100px; 
     height: 100px;
-    &--message {
-        width: 100%;
-    }
 }
 
 #ProfilBtn {
