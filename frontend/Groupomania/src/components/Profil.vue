@@ -237,6 +237,11 @@ export default {
 .picture {
     width: 100px; 
     height: 100px;
+    &--message {
+        @media screen and (max-width: 426px) {
+            width: 100%;
+        }
+    }
 }
 
 #ProfilBtn {

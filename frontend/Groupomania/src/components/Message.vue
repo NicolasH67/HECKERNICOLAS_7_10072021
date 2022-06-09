@@ -188,6 +188,10 @@ export default {
 }
 .picture {
     height: 300px;
+    @media screen and (max-width: 426px) {
+        width: 100%;
+        height: auto;
+    }
 }
 
 .comment {
