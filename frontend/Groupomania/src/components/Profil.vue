@@ -238,7 +238,9 @@ export default {
     width: 100px; 
     height: 100px;
     &--message {
+        height: 300px;
         @media screen and (max-width: 426px) {
+            height: auto;
             width: 100%;
         }
     }
