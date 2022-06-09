@@ -9,15 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       UserId: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       name: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       lastname: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       content: {
